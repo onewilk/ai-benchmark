@@ -1,0 +1,5 @@
+# GitHub Pages（Jekyll）默认排除以 "." 和 "_" 开头的文件，
+# 导致 .env.example 在站点上返回 404（README 里的链接会跳空）。
+# 这里强制包含配置模板；其余文件按原样发布，不做任何转换。
+include:
+  - ".env.example"

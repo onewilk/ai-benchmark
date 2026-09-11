@@ -9,6 +9,7 @@
 | `.env.example` | 1.2 KB | `4419f34ce58b4d1d` | 配置模板（复制为 .env；.env 已被 .gitignore 忽略） |
 | `.gitignore` | 0.4 KB | `29f3763a9cc1521a` | 忽略凭证、缓存、可再生成的中间产物 |
 | `README.md` | 14.6 KB | `1eb59927cf73912c` | 总入口：结果速览、方法、复现步骤、效度局限 |
+| `_config.yml` | 0.3 KB | `87caac102141c971` | GitHub Pages/Jekyll 配置：强制包含 .env.example，避免站点上 404 |
 | `audit_image_runs.py` | 6.3 KB | `1d9e38acecaea23f` | 诚实性审计：是否真 read_image、有无 OCR/偷看旁路 |
 | `build_answers.py` | 3.2 KB | `190cb62e5c4fc4f1` | 从转录重建答案矩阵 |
 | `build_feedback.py` | 3.6 KB | `34b9c2eabee93b93` | 从转录重建两轮反馈结果 |
@@ -54,7 +55,7 @@
 | `generate_vision_catalog.py` | 11.7 KB | `d1c517c89de14e55` | 生成可发图模型目录（需先跑探针） |
 | `index.html` | 1.2 KB | `c6116e210f343662` | GitHub Pages 入口：自动跳转到 report.html |
 | `make_report.py` | 37.7 KB | `b4f9a0285313e927` | 生成 report.html（--embed 出图片内嵌单文件版，--out 指定输出名） |
-| `package.py` | 15.9 KB | `7240d352bd86dae3` | 打包本导出目录（会话范围收敛 + 清单 + 安全校验） |
+| `package.py` | 16.0 KB | `34e6b87f8c767a01` | 打包本导出目录（会话范围收敛 + 清单 + 安全校验） |
 | `patch_settings_input.py` | 5.1 KB | `2c4c811ff99af5e6` | 为名单内模型声明 input:[text,image]（幂等/集合校验/备份） |
 | `probe_vision.py` | 4.6 KB | `e9f14a27c2a0462b` | 直连 API 发图探针 |
 | `probes/capability_test.png` | 2.0 KB | `cfed613f7f80fff4` | 探针图（红圆+绿方+CODE 7291） |
@@ -71,4 +72,4 @@
 | `shortlist.md` | 4.2 KB | `31a998c501d50e38` | 候选清单 Markdown（含元数据误报案例） |
 | `verify_report.py` | 4.8 KB | `e339f66d1e07054c` | 校验报告中的数字仍与原始数据一致（防文档漂移） |
 
-合计 64 个文件，2.22 MB。
+合计 65 个文件，2.22 MB。

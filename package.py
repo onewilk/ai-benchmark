@@ -32,7 +32,7 @@ D = lambda *p: os.path.join(HERE, *p)
 # ---------------------------------------------------------------- include ----
 INCLUDE = [
     "README.md", "requirements.txt", ".gitignore", "index.html",
-    ".env.example", "config.py",
+    ".env.example", "config.py", "_config.yml",
     "docs/settings-dsh-input-declaration.md",
     "prompts/01-answer.md", "prompts/02-feedback-hinted.md",
     "prompts/03-feedback-clean.md", "prompts/04-judge.md", "prompts/05-readiness.md",
@@ -95,6 +95,7 @@ PURPOSE = {
     "verify_report.py": "校验报告中的数字仍与原始数据一致（防文档漂移）",
     "config.py": "集中配置：读取根目录 .env，并可回退到本机 DSH 自动探测",
     ".env.example": "配置模板（复制为 .env；.env 已被 .gitignore 忽略）",
+    "_config.yml": "GitHub Pages/Jekyll 配置：强制包含 .env.example，避免站点上 404",
     "generate_shortlist.py": "生成前期候选清单（md/json/html）",
     "generate_vision_catalog.py": "生成可发图模型目录（需先跑探针）",
     "package.py": "打包本导出目录（会话范围收敛 + 清单 + 安全校验）",
