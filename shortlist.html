@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>各厂商最新旗舰可发图模型筛选</title>
+<style>
+ :root{--bg:#0e1116;--panel:#161b22;--line:#252c36;--fg:#e6edf3;--mut:#8b949e;--ok:#3fb950;--warn:#d29922;--err:#f85149;--acc:#4493f8}
+ *{box-sizing:border-box}
+ body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.55 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+ header{position:sticky;top:0;background:rgba(14,17,22,.97);border-bottom:1px solid var(--line);padding:14px 22px;z-index:5}
+ h1{margin:0;font-size:17px}
+ .sub{color:var(--mut);font-size:12px;margin-top:4px}
+ .bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+ input[type=search],select{background:#0d1117;border:1px solid var(--line);color:var(--fg);padding:7px 10px;border-radius:7px;font-size:13px}
+ input[type=search]{min-width:240px}
+ button{background:#21262d;border:1px solid var(--line);color:var(--fg);padding:7px 12px;border-radius:7px;cursor:pointer;font-size:13px}
+ button:hover{border-color:var(--acc)} button.primary{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+ main{max-width:1400px;margin:0 auto;padding:16px 22px 90px}
+ h2{font-size:14px;color:var(--acc);border-bottom:1px solid var(--line);padding-bottom:6px;margin:22px 0 10px}
+ .row{display:grid;grid-template-columns:30px 130px minmax(230px,1.4fr) 150px 90px 110px 130px 1fr;gap:10px;align-items:center;
+      padding:8px 10px;border:1px solid transparent;border-radius:9px}
+ .row:hover{background:var(--panel);border-color:var(--line)}
+ .row.sel{background:#12261a;border-color:#2ea04366}
+ .row.head{color:var(--mut);font-size:12px;font-weight:600}
+ code{font:12px ui-monospace,Menlo,monospace;color:#c9d1d9}
+ .mut{color:var(--mut);font-size:12px}
+ .badge{font-size:11px;padding:2px 7px;border-radius:20px;border:1px solid;display:inline-block;white-space:nowrap}
+ .b-ok{color:var(--ok);border-color:#2ea04366;background:#2ea0431a}
+ .b-vo{color:var(--warn);border-color:#d2992266;background:#d299221a}
+ .b-no{color:var(--err);border-color:#f8514966;background:#f851491a}
+ .b-un{color:var(--mut);border-color:var(--line)}
+ input[type=checkbox]{width:16px;height:16px;accent-color:var(--acc)}
+ #selbar{position:fixed;bottom:0;left:0;right:0;background:#161b22f2;border-top:1px solid var(--line);padding:12px 22px;display:flex;gap:12px;align-items:center}
+ #out{font:12px ui-monospace,monospace;color:var(--ok);flex:1;overflow:auto;white-space:nowrap}
+ .warnbox{background:#f851491a;border:1px solid #f8514966;border-radius:9px;padding:10px 14px;margin-top:14px;font-size:12.5px;color:#ffb0aa}
+</style></head><body>
+<header>
+  <h1>各厂商<b>最新旗舰</b>「可直接发图」模型筛选</h1>
+  <div class="sub">数据源：路由器 <code>/v1/models</code> 元数据 + 真实发图探针实测（图片内容：红色圆 + 绿色方块 + 编码 7291）。推荐项已默认勾选，可自由增删后复制模型 id。</div>
+  <div class="bar">
+    <input type="search" id="q" placeholder="搜索模型 / 厂商…">
+    <select id="vend"><option value="">全部厂商</option></select>
+    <select id="vd">
+      <option value="">全部实测状态</option>
+      <option value="verified">✅ 已读图</option>
+      <option value="vision-ok">⚠️ 部分正确</option>
+      <option value="bad">❌ 不可用（不能发图/失败）</option>
+    </select>
+    <button id="onlyrec">只看推荐</button>
+    <button id="clear">清空</button>
+    <button class="primary" id="copy">复制选中 id</button>
+  </div>
+</header>
+<main>
+  <div class="row head"><div></div><div>厂商</div><div>模型</div><div>输入模态</div><div>上下文</div><div>价格 进/出</div><div>发图实测</div><div>说明</div></div>
+  <div id="list"></div>
+  <div class="warnbox" id="warn"></div>
+</main>
+<div id="selbar"><span class="mut">已选 <b id="c">0</b>：</span><span id="out">—</span><button class="primary" id="copy2">复制</button></div>
+<script>
+const DATA=[{"id": "openai/gpt-6-astra", "name": "GPT-6-Astra", "vendor": "OpenAI", "tier": "recommended", "note": "GPT-6 旗舰，端到端 agent / 深度研究", "api_company": "OpenAI", "input_modalities": "(元数据未标注)", "context_window": 400000, "max_tokens": 128000, "input_price": 70, "output_price": 350, "currency": "CNY", "metadata_vision": false, "probe_verdict": "verified", "probe_note": null, "probe_latency": 3.79, "probe_reply": "7291\nred", "probe_error": null}, {"id": "openai/gpt-5.6-sol", "name": "GPT-5.6-Sol", "vendor": "OpenAI", "tier": "alternate", "note": "GPT-5.6 系列旗舰（Sol 层）", "api_company": "OpenAI", "input_modalities": "text+image+file", "context_window": 400000, "max_tokens": 128000, "input_price": 35, "output_price": 210, "currency": "CNY", "metadata_vision": true, "probe_verdict": "verified", "probe_note": null, "probe_latency": 2.21, "probe_reply": "7291\nred", "probe_error": null}, {"id": "openai/gpt-5.6-terra", "name": "GPT-5.6-Terra", "vendor": "OpenAI", "tier": "alternate", "note": "GPT-5.6 均衡层（Terra）", "api_company": "OpenAI", "input_modalities": "text+image+file", "context_window": 400000, "max_tokens": 128000, "input_price": 14, "output_price": 84, "currency": "CNY", "metadata_vision": true, "probe_verdict": "verified", "probe_note": null, "probe_latency": 2.49, "probe_reply": "7291\nred", "probe_error": null}, {"id": "anthropic/claude-opus-5", "name": "Claude Opus 5", "vendor": "Anthropic", "tier": "recommended", "note": "Opus 5 旗舰，复杂推理+长期规划", "api_company": "Anthropic", "input_modalities": "text+image+file", "context_window": 1000000, "max_tokens": 128000, "input_price": 35, "output_price": 175, "currency": "CNY", "metadata_vision": true, "probe_verdict": "verified", "probe_note": null, "probe_latency": 2.74, "probe_reply": "7291\nred", "probe_error": null}, {"id": "anthropic/claude-sonnet-5", "name": "Claude Sonnet 5", "vendor": "Anthropic", "tier": "alternate", "note": "Sonnet 5，最新 Sonnet 级", "api_company": "Anthropic", "input_modalities": "text+image+file", "context_window": 1000000, "max_tokens": 64000, "input_price": 14, "output_price": 70, "currency": "CNY", "metadata_vision": true, "probe_verdict": "verified", "probe_note": null, "probe_latency": 2.88, "probe_reply": "CODE7291\nRed", "probe_error": null}, {"id": "anthropic/claude-fable-5.1", "name": "Claude Fable 5.1", "vendor": "Anthropic", "tier": "alternate", "note": "Fable 5.1，知识工作向", "api_company": "Anthropic", "input_modalities": "(元数据未标注)", "context_window": 1000000, "max_tokens": 128000, "input_price": 70, "output_price": 350, "currency": "CNY", "metadata_vision": false, "probe_verdict": "verified", "probe_note": null, "probe_latency": 3.26, "probe_reply": "7291\nRed", "probe_error": null}, {"id": "google/gemini-3.8-flash", "name": "Gemini 3.8 Flash", "vendor": "Google", "tier": "recommended", "note": "Gemini 3.8 Flash，最新一代", "api_company": "Google", "input_modalities": "(元数据未标注)", "context_window": 100000, "max_tokens": 64000, "input_price": 5.25, "output_price": 26.25, "currency": "CNY", "metadata_vision": false, "probe_verdict": "verified", "probe_note": null, "probe_latency": 3.7, "probe_reply": "7291\nRed", "probe_error": null}, {"id": "google/gemini-3.7-flash", "name": "Gemini 3.7 Flash", "vendor": "Google", "tier": "alternate", "note": "Gemini 3.7 Flash", "api_company": "Google", "input_modalities": "(元数据未标注)", "context_window": 100000, "max_tokens": 64000, "input_price": 5.25, "output_price": 26.25, "currency": "CNY", "metadata_vision": false, "probe_verdict": "verified", "probe_note": null, "probe_latency": 5.36, "probe_reply": "7291\nRed", "probe_error": null}, {"id": "google/gemini-3.6-flash", "name": "Gemini 3.6 Flash", "vendor": "Google", "tier": "alternate", "note": "Gemini 3.6 Flash", "api_company": "Google", "input_modalities": "text+file+audio+image+video", "context_window": 1048576, "max_tokens": 65535, "input_price": 10.5, "output_price": 52.5, "currency": "CNY", "metadata_vision": true, "probe_verdict": "verified", "probe_note": null, "probe_latency": 3.03, "probe_reply": "7291\nred", "probe_error": null}, {"id": "deepseek/deepseek-v4.1-flash", "name": "DeepSeek-V4.1-Flash", "vendor": "DeepSeek", "tier": "recommended", "note": "V4.1 Flash，最新视觉实验线", "api_company": "DeepSeek", "input_modalities": "(元数据未标注)", "context_window": 1000000, "max_tokens": 384000, "input_price": 1, "output_price": 4, "currency": "CNY", "metadata_vision": false, "probe_verdict": "verified", "probe_note": null, "probe_latency": 1.64, "probe_reply": "7291\nred", "probe_error": null}, {"id": "deepseek/deepseek-v4-flash-vision-exp", "name": "DeepSeek-V4-Flash-Vision-Exp", "vendor": "DeepSeek", "tier": "alternate", "note": "V4 Flash Vision Exp", "api_company": "DeepSeek", "input_modalities": "text+image", "context_window": 1000000, "max_tokens": 384000, "input_price": 1, "output_price": 4, "currency": "CNY", "metadata_vision": true, "probe_verdict": "verified", "probe_note": null, "probe_latency": 1.07, "probe_reply": "7291\nRed", "probe_error": null}, {"id": "ali/qwen3.8-max-0902", "name": "Qwen3.8-Max-0902（快照版）", "vendor": "阿里 Qwen", "tier": "recommended", "note": "Qwen3.8-Max 快照版，2.4T MoE 旗舰", "api_company": "Ali", "input_modalities": "(元数据未标注)", "context_window": 1000000, "max_tokens": 128000, "input_price": 12, "output_price": 36, "currency": "CNY", "metadata_vision": false, "probe_verdict": "verified", "probe_note": null, "probe_latency": 5.31, "probe_reply": "7291\nred", "probe_error": null}, {"id": "ali/qwen3.8-max", "name": "Qwen3.8-Max", "vendor": "阿里 Qwen", "tier": "alternate", "note": "Qwen3.8-Max 正式版", "api_company": "Ali", "input_modalities": "text+image+video", "context_window": 1000000, "max_tokens": 128000, "input_price": 12, "output_price": 36, "currency": "CNY", "metadata_vision": true, "probe_verdict": "verified", "probe_note": null, "probe_latency": 3.17, "probe_reply": "7291\nred", "probe_error": null}, {"id": "ali/qwen3.8-flash", "name": "Qwen3.8-Flash", "vendor": "阿里 Qwen", "tier": "alternate", "note": "Qwen3.8-Flash 高性价比", "api_company": "Ali", "input_modalities": "text+image+video", "context_window": 1000000, "max_tokens": 128000, "input_price": 1, "output_price": 3, "currency": "CNY", "metadata_vision": true, "probe_verdict": "verified", "probe_note": null, "probe_latency": 4.03, "probe_reply": "7291\nRed", "probe_error": null}, {"id": "ali/qwen3-vl-plus", "name": "Qwen3-VL-Plus", "vendor": "阿里 Qwen", "tier": "alternate", "note": "Qwen3-VL-Plus 视觉专精", "api_company": "Ali", "input_modalities": "text+image", "context_window": 262144, "max_tokens": 258048, "input_price": 1, "output_price": 10, "currency": "CNY", "metadata_vision": true, "probe_verdict": "verified", "probe_note": null, "probe_latency": 1.23, "probe_reply": "CODE7291  \nred", "probe_error": null}, {"id": "bytedance/doubao-seed-2-1-pro", "name": "Doubao-Seed-2.1-pro", "vendor": "字节豆包", "tier": "recommended", "note": "Seed-2.1 Pro，Coding/Agent 旗舰", "api_company": "ByteDance", "input_modalities": "text+image+video", "context_window": 256000, "max_tokens": 256000, "input_price": 6, "output_price": 30, "currency": "CNY", "metadata_vision": true, "probe_verdict": "verified", "probe_note": null, "probe_latency": 27.79, "probe_reply": "7291\nred", "probe_error": null}, {"id": "bytedance/doubao-seed-2-1-turbo", "name": "Doubao-Seed-2.1-turbo", "vendor": "字节豆包", "tier": "alternate", "note": "Seed-2.1 Turbo 均衡版", "api_company": "ByteDance", "input_modalities": "text+image+video", "context_window": 256000, "max_tokens": 256000, "input_price": 3, "output_price": 15, "currency": "CNY", "metadata_vision": true, "probe_verdict": "verified", "probe_note": null, "probe_latency": 4.27, "probe_reply": "7291\nred", "probe_error": null}, {"id": "moonshot/kimi-k3", "name": "Kimi K3", "vendor": "月之暗面", "tier": "recommended", "note": "Kimi K3，2.8T 参数旗舰", "api_company": "Moonshot", "input_modalities": "text+image+video", "context_window": 1000000, "max_tokens": 132000, "input_price": 20, "output_price": 100, "currency": "CNY", "metadata_vision": true, "probe_verdict": "verified", "probe_note": null, "probe_latency": 20.59, "probe_reply": "7291\nred", "probe_error": null}, {"id": "moonshot/kimi-k2.7-code", "name": "Kimi K2.7 Code", "vendor": "月之暗面", "tier": "alternate", "note": "Kimi K2.7 Code", "api_company": "Moonshot", "input_modalities": "text+image", "context_window": 256000, "max_tokens": 32000, "input_price": 6.5, "output_price": 27, "currency": "CNY", "metadata_vision": true, "probe_verdict": "vision-ok", "probe_note": "读到了图片内容（输出格式/细节不完美）", "probe_latency": 4.37, "probe_reply": "7281\nred", "probe_error": null}, {"id": "x-ai/grok-4.6", "name": "Grok 4.6", "vendor": "xAI", "tier": "recommended", "note": "Grok 4.6，最新旗舰（2M 上下文）", "api_company": "xAI", "input_modalities": "text+image+file", "context_window": 2000000, "max_tokens": 30000, "input_price": 14, "output_price": 42, "currency": "CNY", "metadata_vision": true, "probe_verdict": "verified", "probe_note": null, "probe_latency": 60.42, "probe_reply": "7291\nred", "probe_error": null}, {"id": "x-ai/grok-4.5", "name": "Grok 4.5", "vendor": "xAI", "tier": "alternate", "note": "Grok 4.5", "api_company": "xAI", "input_modalities": "text+image+file", "context_window": 2000000, "max_tokens": 30000, "input_price": 14, "output_price": 42, "currency": "CNY", "metadata_vision": true, "probe_verdict": "verified", "probe_note": null, "probe_latency": 2.6, "probe_reply": "7291\nred", "probe_error": null}, {"id": "bigmodel/glm-5v-turbo", "name": "GLM-5V-Turbo", "vendor": "智谱 GLM", "tier": "recommended", "note": "GLM-5V-Turbo，多模态 Coding 基座", "api_company": "bigmodel", "input_modalities": "text+video+image", "context_window": 200000, "max_tokens": 128000, "input_price": 5, "output_price": 22, "currency": "CNY", "metadata_vision": true, "probe_verdict": "verified", "probe_note": null, "probe_latency": 4.95, "probe_reply": "7291\nred", "probe_error": null}, {"id": "minimax/minimax-m3", "name": "MiniMax M3（5折）", "vendor": "MiniMax", "tier": "recommended", "note": "MiniMax M3 旗舰", "api_company": "MiniMax", "input_modalities": "text+image+video", "context_window": 1000000, "max_tokens": 1000000, "input_price": 2.1, "output_price": 8.4, "currency": "CNY", "metadata_vision": true, "probe_verdict": "verified", "probe_note": null, "probe_latency": 1.9, "probe_reply": "7291\nred", "probe_error": null}, {"id": "intern/intern-s2-preview", "name": "Intern-S2-Preview", "vendor": "Intern", "tier": "recommended", "note": "Intern-S2 Preview（元数据漏报，实测可发图）", "api_company": "InternLM", "input_modalities": "text", "context_window": 128000, "max_tokens": 8000, "input_price": 0, "output_price": 0, "currency": "CNY", "metadata_vision": false, "probe_verdict": "verified", "probe_note": null, "probe_latency": 1.05, "probe_reply": "1) CODE7291\n2) red", "probe_error": null}, {"id": "intern/internvl3.5", "name": "InternVL3.5", "vendor": "Intern", "tier": "alternate", "note": "InternVL3.5（元数据漏报，实测可发图）", "api_company": "InternLM", "input_modalities": "text", "context_window": 128000, "max_tokens": 8000, "input_price": 0, "output_price": 0, "currency": "CNY", "metadata_vision": false, "probe_verdict": "verified", "probe_note": null, "probe_latency": 6.8, "probe_reply": "7291\nred", "probe_error": null}, {"id": "agnes/agnes-2.5-flash", "name": "Agnes 2.5 Flash", "vendor": "Agnes", "tier": "recommended", "note": "Agnes 2.5 Flash（元数据未标注）", "api_company": "Agnes", "input_modalities": "(元数据未标注)", "context_window": 512000, "max_tokens": 65500, "input_price": 0, "output_price": 0, "currency": "CNY", "metadata_vision": false, "probe_verdict": "verified", "probe_note": null, "probe_latency": 1.17, "probe_reply": "7291\nRed", "probe_error": null}, {"id": "meta/llama-4-scout", "name": "Llama 4 Scout", "vendor": "Meta", "tier": "recommended", "note": "Llama 4 Scout（唯一在售 Meta 视觉模型）", "api_company": "Meta.AI", "input_modalities": "text+image", "context_window": 128000, "max_tokens": 8000, "input_price": 0.56, "output_price": 2.1, "currency": "CNY", "metadata_vision": true, "probe_verdict": "verified", "probe_note": null, "probe_latency": 2.53, "probe_reply": "CODE7291\nRed", "probe_error": null}], EX={"longcat/longcat-2.0": "实测明确回复「I can't see an image」，元数据误报", "xiaomi/mimo-v2.5-pro": "接口 404：No endpoints found that support image input", "stepfun/step-3.5-flash-2603": "接口 400：模型不支持图片输入", "baidu/ernie-4.5-turbo-vl-preview": "接口 401：当前 key 无该模型访问权限", "tencent/hy4-preview": "两次发图均返回空响应，无法确认可用"};
+const good=v=>v==='verified'||v==='vision-ok';
+const sel=new Set(JSON.parse(localStorage.getItem('ssy_sel')||'null')||DATA.filter(d=>d.tier==='recommended'&&good(d.probe_verdict)).map(d=>d.id));
+const save=()=>localStorage.setItem('ssy_sel',JSON.stringify([...sel]));
+const ctx=n=>!n?'—':n>=1e6?(n/1e6).toFixed(1)+'M':Math.round(n/1000)+'K';
+const VB={verified:['b-ok','✅ 已读图'],'vision-ok':['b-vo','⚠️ 部分正确'],'no-vision':['b-no','❌ 不能发图'],
+          error:['b-no','❌ 调用失败'],inconclusive:['b-no','❌ 无响应'],'not-probed':['b-un','— 未测']};
+const selV=document.getElementById('vend');
+[...new Set(DATA.map(d=>d.vendor))].sort().forEach(v=>selV.add(new Option(v,v)));
+function render(){
+  const q=document.getElementById('q').value.toLowerCase(), v=selV.value, vd=document.getElementById('vd').value;
+  const onlyrec=document.getElementById('onlyrec').dataset.on==='1';
+  const rows=DATA.filter(d=>{
+    if(v&&d.vendor!==v)return false;
+    if(q&&!(d.id+d.name+d.vendor+d.note).toLowerCase().includes(q))return false;
+    if(onlyrec&&d.tier!=='recommended')return false;
+    if(vd==='bad'&&good(d.probe_verdict))return false;
+    if(vd&&vd!=='bad'&&d.probe_verdict!==vd)return false;
+    return true;
+  });
+  document.getElementById('list').innerHTML=rows.map(d=>{
+    const [cls,lab]=VB[d.probe_verdict]||VB['not-probed'];
+    const isSel=sel.has(d.id);
+    return `<label class="row ${isSel?'sel':''}">
+      <input type="checkbox" data-id="${d.id}" ${isSel?'checked':''}>
+      <div class="mut">${d.vendor}</div>
+      <div><code>${d.id}</code><div class="mut">${d.name||''}</div></div>
+      <div class="mut">${d.input_modalities}</div>
+      <div class="mut">${ctx(d.context_window)}</div>
+      <div class="mut">${d.input_price}/${d.output_price}</div>
+      <div><span class="badge ${cls}">${lab}</span>${d.probe_latency?`<div class="mut">${d.probe_latency}s</div>`:''}</div>
+      <div class="mut">${d.note}${d.probe_error?'<br><span style="color:#f85149">'+d.probe_error.slice(0,90)+'</span>':''}</div>
+    </label>`;
+  }).join('')||'<p class="mut">无匹配项</p>';
+  document.querySelectorAll('input[type=checkbox]').forEach(cb=>{cb.onchange=()=>{
+    cb.checked?sel.add(cb.dataset.id):sel.delete(cb.dataset.id);save();counts();render();};});
+}
+function counts(){document.getElementById('c').textContent=sel.size;
+  document.getElementById('out').textContent=[...sel].join(' ')||'—';}
+const cp=t=>navigator.clipboard.writeText(t).then(()=>alert('已复制:\n'+t)).catch(()=>prompt('复制:',t));
+document.getElementById('q').oninput=render; selV.onchange=render; document.getElementById('vd').onchange=render;
+document.getElementById('onlyrec').onclick=e=>{const b=e.currentTarget;b.dataset.on=b.dataset.on==='1'?'0':'1';
+  b.textContent=b.dataset.on==='1'?'显示全部':'只看推荐';render();};
+document.getElementById('clear').onclick=()=>{sel.clear();save();counts();render();};
+document.getElementById('copy').onclick=()=>cp([...sel].join('\n'));
+document.getElementById('copy2').onclick=()=>cp([...sel].join('\n'));
+document.getElementById('warn').innerHTML='<b>元数据误报（声称可发图，实测不可用，已从候选中剔除）：</b><br>'+
+  Object.entries(EX).map(([k,v])=>`• <code>${k}</code> — ${v}`).join('<br>');
+counts();render();
+</script></body></html>

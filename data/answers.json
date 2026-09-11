@@ -1,0 +1,821 @@
+{
+  "models": {
+    "openai/gpt-5.6-sol": {
+      "1": {
+        "answer": "C",
+        "reason": "①和③在天线、五官、身体按钮及四肢等细节上完全一致。",
+        "confidence": "high",
+        "session_id": "382b6e2c-20da-4120-9888-0032e75984db",
+        "wall_ms": 7799,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "2": {
+        "answer": "C",
+        "reason": "两图有三处不同：左图多了烟囱、云朵数量不同，且窗户分别为圆形和方形。",
+        "confidence": "high",
+        "session_id": "b0d9f67f-e0b7-4e93-8a83-445d83567225",
+        "wall_ms": 10332,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "3": {
+        "answer": "B",
+        "reason": "路线②途中没有障碍物且直接通向奶酪，因此小老鼠应走路线②。",
+        "confidence": "high",
+        "session_id": "a6b7cb72-13c4-45af-901d-782b585d34b3",
+        "wall_ms": 7418,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "4": {
+        "answer": "C",
+        "reason": "图中蓝色正方形共有4个，因此选择C。",
+        "confidence": "high",
+        "session_id": "a0869444-0a44-422c-9cba-40360feb4fe3",
+        "wall_ms": 6737,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "5": {
+        "answer": "B",
+        "reason": "图片中小狗的头顶位置最高，因此小狗最高。",
+        "confidence": "high",
+        "session_id": "a5308492-8ea4-4114-bd90-82830a45054e",
+        "wall_ms": 6593,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "6": {
+        "answer": "B",
+        "reason": "图②与左侧图案均由四个方块组成相同的L形排列，方向也一致。",
+        "confidence": "high",
+        "session_id": "316cf77f-6703-4ec4-8e27-e9652b88c12f",
+        "wall_ms": 7454,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "7": {
+        "answer": "A",
+        "reason": "箭头按“上、下”交替出现，所以下一个应为向上箭头。",
+        "confidence": "high",
+        "session_id": "56e90a53-9917-484b-ad44-6ae3e47faa2d",
+        "wall_ms": 6667,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "8": {
+        "answer": "B",
+        "reason": "小明先开灯，第二件事是从书架上拿书，因此选B。",
+        "confidence": "high",
+        "session_id": "07b30113-d558-4496-b6cb-78192db659e4",
+        "wall_ms": 8330,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "9": {
+        "answer": "B",
+        "reason": "颜色按“黑、黑、白”三颗一组循环，因此白色之后下一颗应为黑色。",
+        "confidence": "high",
+        "session_id": "95cfe077-5534-44a5-a610-5e5bf0e26ea8",
+        "wall_ms": 7488,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "10": {
+        "answer": "A",
+        "reason": "积木倒了以后重新搭并尝试不同方法，体现了积极解决问题和坚持探索的能力。",
+        "confidence": "high",
+        "session_id": "4e5105c7-1ae3-4aa7-ad76-4e56114003cb",
+        "wall_ms": 7290,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      }
+    },
+    "anthropic/claude-opus-5": {
+      "1": {
+        "answer": "C",
+        "reason": "②的天线是红色且一只眼睛眨着（闭眼），④身上的按钮颜色不同（有橙红色），只有①和③的天线、双眼笑脸和两颗蓝色按钮完全相同。",
+        "confidence": "high",
+        "session_id": "5a3f23d2-dc2d-4f32-904e-0ed7cbb7c882",
+        "wall_ms": 13602,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "2": {
+        "answer": "C",
+        "reason": "两幅图对比可见三处不同：左图房顶有烟囱（并冒烟）而右图没有、左图墙上的窗户是圆形而右图是方形、以及右侧那棵树的大小（位置）不一样，共3处。",
+        "confidence": "medium",
+        "session_id": "6a54b8ed-6d95-4b46-820b-4ce2e72e162c",
+        "wall_ms": 33566,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "3": {
+        "answer": "B",
+        "reason": "图中①③④三条路的前方都有褐色障碍物挡住，只有绿色的路线②畅通无阻地一直延伸到奶酪处，所以小老鼠应走路线②。",
+        "confidence": "high",
+        "session_id": "dfc1337a-c747-44c0-8ced-83b48f73c085",
+        "wall_ms": 9570,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "4": {
+        "answer": "C",
+        "reason": "图中蓝色正方形分别位于第一行第3个、第二行第1个和第3个、第四行第2个，共4个。",
+        "confidence": "high",
+        "session_id": "96c85148-bbf1-4986-a13a-382847918389",
+        "wall_ms": 8832,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "5": {
+        "answer": "B",
+        "reason": "图中三只小动物并排站立，小狗明显比小兔和小猫高出许多，所以最高的是小狗。",
+        "confidence": "high",
+        "session_id": "21973c32-86b4-4120-aea6-46e115071f79",
+        "wall_ms": 12862,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "6": {
+        "answer": "B",
+        "reason": "左边造型是竖着三块、最下面一块右侧再加一块的\"L\"形（共4块），只有图②与之完全一致。",
+        "confidence": "high",
+        "session_id": "49daa495-7e56-441b-a0e7-43c58a8fdfe0",
+        "wall_ms": 11132,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "7": {
+        "answer": "A",
+        "reason": "箭头按\"上、下\"交替循环，序列↑↓↑↓之后应回到↑，故选A。",
+        "confidence": "high",
+        "session_id": "4c36a297-5c4f-4994-8a51-1d7700a1412c",
+        "wall_ms": 8093,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "8": {
+        "answer": "B",
+        "reason": "文本顺序是\"先打开台灯，再从书架上拿一本书，然后坐下来看\"，所以第二件事是拿书，对应书架前取书的图片B。",
+        "confidence": "high",
+        "session_id": "bcb69bf6-b72b-4691-a68d-ca73246b8975",
+        "wall_ms": 10175,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "9": {
+        "answer": "B",
+        "reason": "图中序列为“黑黑白、黑黑黑白”，白球之后总是重新开始一组黑球（黑球数量递增），因此紧接着的下一个应是黑色。",
+        "confidence": "medium",
+        "session_id": "f769c53d-2e1d-452c-8cd7-3e788cc8d0b4",
+        "wall_ms": 16471,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "10": {
+        "answer": "A",
+        "reason": "积木倒了后选择重新搭并尝试不同搭法，体现了不怕失败、主动探索的积极态度，是最恰当的做法。",
+        "confidence": "high",
+        "session_id": "2de8de3e-83f3-40af-a66d-1bae712ce912",
+        "wall_ms": 8564,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      }
+    },
+    "google/gemini-3.8-flash": {
+      "1": {
+        "answer": "C",
+        "reason": "①和③的天线颜色、面部表情、手臂朝向及身体纽扣均完全相同，因此这两个机器人长得完全一样。",
+        "confidence": "high",
+        "session_id": "f170399a-df41-4f45-8e42-86d9ed15dc37",
+        "wall_ms": 24315,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "2": {
+        "answer": "B",
+        "reason": "两幅图共有两处不同，分别是左图屋顶有烟囱而右图没有，以及左图的窗户为圆形而右图为正方形。",
+        "confidence": "high",
+        "session_id": "a783e774-aa7a-4e09-9536-2619ccd732c3",
+        "wall_ms": 14126,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "3": {
+        "answer": "B",
+        "reason": "路线①、③、④前方均有障碍物阻挡，只有路线②畅通无阻可以直接到达奶酪。",
+        "confidence": "high",
+        "session_id": "a7c662b2-e7e3-4121-99e9-53d182fe6b68",
+        "wall_ms": 9682,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "4": {
+        "answer": "C",
+        "reason": "图中4×4的网格中，蓝色的正方形分别位于第1行第3列、第2行第1列、第2行第3列以及第4行第2列，共有4个。",
+        "confidence": "high",
+        "session_id": "5183121a-c715-448e-8221-edf702e13d15",
+        "wall_ms": 9113,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "5": {
+        "answer": "B",
+        "reason": "从图中三只小动物的身高对比可以直接看出，站在中间的小狗明显最高。",
+        "confidence": "high",
+        "session_id": "5d719145-7ce6-487e-8ca8-f2e2a97d01c5",
+        "wall_ms": 12288,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "6": {
+        "answer": "B",
+        "reason": "左侧搭好的造型是由4个方块组成的“L”形（左侧一列3个，右下方1个），与右侧的图②形状完全一致。",
+        "confidence": "high",
+        "session_id": "7515638a-1734-489e-a555-4494f3892e03",
+        "wall_ms": 9524,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "7": {
+        "answer": "A",
+        "reason": "箭头方向按“上、下、上、下”交替循环，因此接下来的方向应该是向上（↑）。",
+        "confidence": "high",
+        "session_id": "b65fca82-b9d6-4e34-8679-da5d070bd100",
+        "wall_ms": 8471,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "8": {
+        "answer": "B",
+        "reason": "根据题目文本，小明“先打开台灯，再从书架上拿了一本书”，因此做的第二件事情是拿书。",
+        "confidence": "high",
+        "session_id": "7e8f1bf2-420d-4b07-9561-874256432609",
+        "wall_ms": 15081,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "9": {
+        "answer": "B",
+        "reason": "图形颜色呈现“黑、黑、白”三个一组的周期性循环规律，前六个依次为黑、黑、白、黑、黑、白，因此下一个应该为黑色。",
+        "confidence": "high",
+        "session_id": "11be328a-08c7-4e92-9851-b1fa9e0dbb02",
+        "wall_ms": 11538,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "10": {
+        "answer": "A",
+        "reason": "面对积木倒塌的挫折，选择“重新搭，试试不同的搭法”体现了积极的抗挫折能力、探索精神与独立解决问题的良好品质。",
+        "confidence": "high",
+        "session_id": "578243dd-1986-477a-9c25-841795f3f244",
+        "wall_ms": 10100,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      }
+    },
+    "deepseek/deepseek-v4.1-flash": {
+      "1": {
+        "answer": "C",
+        "reason": "①号与③号机器人的天线、眼睛、嘴巴和身上纽扣的数量与位置完全一致，而②号天线为红色且眼睛是弯线、④号纽扣数量不同，故只有①和③长得完全一样。",
+        "confidence": "high",
+        "session_id": "e0fbb57b-e1c4-498c-9379-4088994030a1",
+        "wall_ms": 6233,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "2": {
+        "answer": "B",
+        "reason": "两图对比只有两处不同：左图屋顶有烟囱而右图没有，左图墙上是圆形窗户而右图是方形窗户，其余（太阳、树、花朵、门）均相同。",
+        "confidence": "high",
+        "session_id": "4ea0942e-42d8-4b48-b16f-d0878721b86b",
+        "wall_ms": 4871,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "3": {
+        "answer": "B",
+        "reason": "图中只有绿色的路线②箭头一直延伸到右侧的奶酪处，其余红、蓝、橙三条路线都被棕色障碍挡住，到不了终点，所以小老鼠应走路线②。",
+        "confidence": "high",
+        "session_id": "4be72eb8-10db-48a6-93f6-e4aa1c54cc18",
+        "wall_ms": 3861,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "4": {
+        "answer": "C",
+        "reason": "图中共有16个图形，其中蓝色正方形分布为：第一行1个、第二行2个、第四行1个，合计4个。",
+        "confidence": "high",
+        "session_id": "ca345fe8-47e2-4f8d-a8d8-f159997c3c45",
+        "wall_ms": 3820,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "5": {
+        "answer": "B",
+        "reason": "图中三只小动物并排站立，小狗的身高明显高于小兔和小猫，所以最高的是小狗。",
+        "confidence": "high",
+        "session_id": "515a2040-25f4-404f-9bb4-a6a74b73742d",
+        "wall_ms": 3253,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "6": {
+        "answer": "B",
+        "reason": "左边的造型由4个小方块拼成阶梯状（竖排方块加底部错位延伸），右边四个图中只有图②的方块数量与排列形状与它一致（图①只有3块、图③是T形、图④是一条直线）。",
+        "confidence": "medium",
+        "session_id": "73cf56cb-e20b-4784-b3ef-ce50af85898a",
+        "wall_ms": 92913,
+        "steps": 3,
+        "tool_calls": 3,
+        "images": 0
+      },
+      "7": {
+        "answer": "A",
+        "reason": "箭头按“上、下、上、下”交替出现，第五个应为向上，故选 A（↑）。",
+        "confidence": "high",
+        "session_id": "cbdf0fb6-1fc2-40b7-b3ad-0f2cd5eef2c7",
+        "wall_ms": 2911,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "8": {
+        "answer": "B",
+        "reason": "文中顺序为\"先打开台灯→再从书架上拿了一本书→然后坐下看\"，所以第二件事是拿书，对应选项B。",
+        "confidence": "high",
+        "session_id": "0eeb776b-5ce1-4db3-bade-ae886121b193",
+        "wall_ms": 4305,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "9": {
+        "answer": "B",
+        "reason": "图中圆点按「黑、黑、白」循环出现（已完整重复两轮：黑黑白·黑黑白），因此下一个应进入新一轮的第一个，即黑色。",
+        "confidence": "high",
+        "session_id": "6ea1f9b5-0c7f-4270-a2d0-0d206bc1fb43",
+        "wall_ms": 4883,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "10": {
+        "answer": "A",
+        "reason": "题目问搭积木倒了会怎么做，A选项\"重新搭，试试不同的搭法\"体现了面对挫折时的坚持和主动解决问题，是最积极健康的应对方式，而B、C、D都表现为放弃或依赖他人。",
+        "confidence": "high",
+        "session_id": "b58c6aa2-84fc-41a0-9edb-858c70ab6dba",
+        "wall_ms": 3383,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      }
+    },
+    "ali/qwen3.8-max-0902": {
+      "1": {
+        "answer": "C",
+        "reason": "②号机器人眨着一只眼且天线球为红色，④号机器人头部颜色偏浅且身体纽扣为橙色，只有①和③在脸部表情、天线颜色和身体纽扣等所有特征上完全一致。",
+        "confidence": "high",
+        "session_id": "4878b68a-d5cc-4004-8684-a30cc467a9d0",
+        "wall_ms": 43688,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "2": {
+        "answer": "D",
+        "reason": "两幅图共有4处不同：左图屋顶有烟囱而右图没有、左图窗户为圆形而右图为方形、左图草地横贯整个画面而右图草地左段缺失、云朵位置不同（左图在树上方靠右边缘，右图在屋顶右上方）。",
+        "confidence": "medium",
+        "session_id": "3f5abbd2-6e0b-4286-888e-3433f69e6c22",
+        "wall_ms": 175904,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "3": {
+        "answer": "B",
+        "reason": "图中只有路线②（绿色箭头）一路直通终点奶酪，而路线①、③、④的箭头都在中途被墙（棕色障碍块）挡住，无法到达奶酪。",
+        "confidence": "high",
+        "session_id": "6688afd0-ba6f-439c-bcd1-1efbb7107086",
+        "wall_ms": 12278,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "4": {
+        "answer": "C",
+        "reason": "逐行清点图中蓝色正方形：第一行1个、第二行2个、第四行1个，合计4个。",
+        "confidence": "high",
+        "session_id": "85e8fc2b-cc25-4494-aa1b-515ee61c3e8f",
+        "wall_ms": 13099,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "5": {
+        "answer": "B",
+        "reason": "图中排在中间的小狗明显比最前面的小兔和最后面的小猫都高，所以最高的是小狗。",
+        "confidence": "high",
+        "session_id": "1d6ec09f-f232-444a-8d78-d34edb03dddb",
+        "wall_ms": 13789,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "6": {
+        "answer": "B",
+        "reason": "左边图案是由4个方块组成的L形（竖列3个、最下方右侧再加1个），只有图②的形状与之完全一致（图①只有3个方块，图③是T形，图④是竖列4个）。",
+        "confidence": "high",
+        "session_id": "01819d44-8956-4017-b056-6c67efabfbdc",
+        "wall_ms": 15101,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "7": {
+        "answer": "A",
+        "reason": "箭头按↑、↓交替出现的规律排列，第5个位置应回到↑。",
+        "confidence": "high",
+        "session_id": "3dacd11a-7417-4c49-8f77-18e39219f034",
+        "wall_ms": 10654,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "8": {
+        "answer": "B",
+        "reason": "句中顺序为\"先打开台灯（第一件）、再从书架上拿了一本书（第二件）、然后坐下来开始看（第三件）\"，故第二件事是拿书，对应选项B（图中B为从书架取书）。",
+        "confidence": "high",
+        "session_id": "39ff7ca1-5177-4a42-8fd7-c9eeeabd3a99",
+        "wall_ms": 18881,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "9": {
+        "answer": "B",
+        "reason": "序列以\"黑、黑、白\"为周期循环（黑黑白黑黑白），第7个位置是新周期的开始，应为黑色。",
+        "confidence": "high",
+        "session_id": "aa830dba-36c7-423e-8992-7ba693a16a96",
+        "wall_ms": 20784,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "10": {
+        "answer": "A",
+        "reason": "积木倒了后重新搭并尝试不同搭法体现了坚持性和积极解决问题的成长型心态，是最正面的应对方式。",
+        "confidence": "high",
+        "session_id": "b72d72e8-7144-4400-9eb0-097174fc18be",
+        "wall_ms": 8550,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      }
+    },
+    "bytedance/doubao-seed-2-1-pro": {
+      "1": {
+        "answer": "C",
+        "reason": "机器人①和③都有灰色天线、相同深浅的蓝色头部、两个黑色圆点眼睛、微笑表情、橙色身体和两个蓝色纽扣，其余组合均存在天线颜色、眼睛样式、身体颜色或纽扣颜色的差异。",
+        "confidence": "high",
+        "session_id": "c3999112-ab7a-495c-a94c-cec14dd74f66",
+        "wall_ms": 33400,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "2": {
+        "answer": "C",
+        "reason": "两幅图共有3处不同：左图屋顶有灰色烟囱而右图没有、左图的窗户是圆形而右图是方形、左图天空有两朵白云而右图只有一朵。",
+        "confidence": "high",
+        "session_id": "2144d8a6-4157-4726-a661-c413887cdf04",
+        "wall_ms": 39432,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "3": {
+        "answer": "B",
+        "reason": "路线①、③、④的尽头都有棕色木块阻挡无法通行，只有绿色的路线②没有障碍物，箭头直接指向奶酪方向，可以顺利到达终点吃到奶酪。",
+        "confidence": "high",
+        "session_id": "f09b67b5-d109-4bfc-b6e7-3032e1c79043",
+        "wall_ms": 11531,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "4": {
+        "answer": "C",
+        "reason": "逐行统计蓝色正方形：第一行1个、第二行2个、第四行1个，相加总共有4个蓝色正方形，对应选项C。",
+        "confidence": "high",
+        "session_id": "3ba4b658-f4dc-4daa-ad99-b0abed807a88",
+        "wall_ms": 23199,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "5": {
+        "answer": "B",
+        "reason": "从图片中可以直观看到，站在中间位置的小狗身高最高，小兔最矮，小猫身高介于二者之间，因此小狗是最高的。",
+        "confidence": "high",
+        "session_id": "5a4d3254-ed26-4d85-9279-1ba941ce5f8e",
+        "wall_ms": 11041,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "6": {
+        "answer": "B",
+        "reason": "左侧搭好的造型是竖排3个方块、最下方方块右侧额外有1个方块的L形结构，总共有4个方块，只有图②完全符合该形状特征。",
+        "confidence": "high",
+        "session_id": "70b725fa-3593-4149-a551-3bd48aeabcef",
+        "wall_ms": 23305,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "7": {
+        "answer": "A",
+        "reason": "箭头按照向上、向下交替循环的规律排列，第四个箭头是向下，因此下一个应该是向上（↑）。",
+        "confidence": "high",
+        "session_id": "2712972d-a63a-45c4-a857-4d43fff4e30c",
+        "wall_ms": 11107,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "8": {
+        "answer": "B",
+        "reason": "根据题干描述的动作顺序，小明第一件事是打开台灯，第二件事就是从书架上拿书，对应选项B。",
+        "confidence": "high",
+        "session_id": "b5b1f256-f70b-40b5-8f1d-8eea47f6d3ab",
+        "wall_ms": 11249,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "9": {
+        "answer": "B",
+        "reason": "图形规律为两个黑色球后跟一个白色球循环排列，第六个球是白色，因此下一个应为黑色。",
+        "confidence": "high",
+        "session_id": "ce5c5194-f458-4ab8-9d11-68ccc08527f8",
+        "wall_ms": 17458,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "10": {
+        "answer": "A",
+        "reason": "搭积木倒塌后选择重新搭建并尝试不同搭法，是面对挫折不逃避、主动探索解决问题的积极正向做法，其余选项分别是放弃、依赖他人、转移注意力的消极应对方式，不符合正确的行为引导。",
+        "confidence": "high",
+        "session_id": "20ca0c53-0909-42f3-b0a3-b335f180f0a8",
+        "wall_ms": 12566,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      }
+    },
+    "moonshot/kimi-k3": {
+      "1": {
+        "answer": "C",
+        "reason": "②头顶天线球是红色、④身上按钮是红色，只有①和③在天线、五官、按钮颜色和四肢细节上完全一致。",
+        "confidence": "high",
+        "session_id": "542c0ceb-2aba-4af4-a85f-b70563d13c25",
+        "wall_ms": 50312,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "2": {
+        "answer": "C",
+        "reason": "两图共有3处不同：左图屋顶有烟囱而右图没有，左图窗户是圆形而右图是方形，底部花朵数量不同（右图树旁多一朵粉色花）。",
+        "confidence": "medium",
+        "session_id": "da8f8d39-99f1-41e9-b695-d0e7b51e4321",
+        "wall_ms": 50297,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "3": {
+        "answer": "B",
+        "reason": "图中只有路线②（绿色箭头）一路延伸到奶酪处，其余①③④都被路障挡住。",
+        "confidence": "high",
+        "session_id": "c251c15d-d1e9-45d1-b192-9cc264201804",
+        "wall_ms": 81615,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "4": {
+        "answer": "C",
+        "reason": "图中蓝色正方形分别位于第一行第3个、第二行第1个和第3个、第四行第2个，共4个。",
+        "confidence": "high",
+        "session_id": "b7b456db-4356-45ad-a404-feb4c67ac179",
+        "wall_ms": 40262,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "5": {
+        "answer": "B",
+        "reason": "从图中可以看出，站在中间的小狗身材最高，明显高于小兔和小猫。",
+        "confidence": "high",
+        "session_id": "737a52bb-8e6b-4a22-adba-4de8cbf83f39",
+        "wall_ms": 50307,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "6": {
+        "answer": "B",
+        "reason": "左边图案是L形：三个方块竖直叠放、底部右侧再伸出一块，右边只有图②与之完全一致（①少一块，③是T形，④是四个竖排）。",
+        "confidence": "high",
+        "session_id": "2753f390-4c92-4585-beda-b2005740c284",
+        "wall_ms": 40127,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "7": {
+        "answer": "A",
+        "reason": "箭头按\"上、下、上、下\"交替排列，所以下一个应该是向上的箭头↑。",
+        "confidence": "high",
+        "session_id": "6931acfa-017a-475f-b65d-91b5bce7f379",
+        "wall_ms": 40278,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "8": {
+        "answer": "B",
+        "reason": "题目中小明做事的顺序是\"先打开台灯（第一件），再从书架上拿了一本书（第二件），然后坐下来看\"，所以第二件事是从书架上拿书，对应选项B。",
+        "confidence": "high",
+        "session_id": "f2926c35-82a0-4eb2-bcf1-8157cebb6af8",
+        "wall_ms": 40273,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "9": {
+        "answer": "B",
+        "reason": "图中圆球按\"黑、黑、白\"三个一组循环排列（黑黑白、黑黑白），所以接下来应是黑色。",
+        "confidence": "high",
+        "session_id": "24ae33d6-c437-48f8-8814-40b5bcc4fc73",
+        "wall_ms": 51521,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "10": {
+        "answer": "A",
+        "reason": "重新搭并尝试不同的搭法体现了面对挫折时的坚持性和主动解决问题的能力，是最积极正确的应对方式。",
+        "confidence": "high",
+        "session_id": "6d98b5af-3ab0-40e6-8326-22b0b05f3195",
+        "wall_ms": 51364,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      }
+    },
+    "bigmodel/glm-5.3-flash": {
+      "1": {
+        "answer": "C",
+        "reason": "机器人①和③完全相同（蓝色圆点眼睛、微笑嘴、蓝色天线上球和两颗蓝色身体按钮），②是眨眼红天线、④身体按钮是红色，均与众不同。",
+        "confidence": "high",
+        "session_id": "4c897772-7f3b-4c91-bbee-c4a58c5af8c6",
+        "wall_ms": 24028,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "2": {
+        "answer": "C",
+        "reason": "两图共有3处不同：左图屋顶有烟囱而右图没有、左图窗户是圆形而右图是方形、左图天上多一朵小云（左2朵、右1朵），其余太阳、门、花、树、草地均相同。",
+        "confidence": "medium",
+        "session_id": "321912d7-942a-4d6e-b451-06d7e0dd844e",
+        "wall_ms": 86135,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "3": {
+        "answer": "B",
+        "reason": "图中只有绿色路线②的箭头一直指向右侧的奶酪终点，而路线①③④都只指向中途的障碍块，所以应走路②。",
+        "confidence": "high",
+        "session_id": "81a70e69-efc0-4b3e-8156-25daac918532",
+        "wall_ms": 15677,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "4": {
+        "answer": "C",
+        "reason": "逐行清点图中蓝色正方形：第1行1个（第3列）、第2行2个（第1、3列）、第3行0个、第4行1个（第2列），共4个，故选C。",
+        "confidence": "high",
+        "session_id": "314ead36-8dfa-433c-93d1-9be9d1cb939c",
+        "wall_ms": 20088,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "5": {
+        "answer": "B",
+        "reason": "图中三只小动物站在同一水平线上，中间的小狗头顶明显高于小兔和小猫，所以小狗最高。",
+        "confidence": "high",
+        "session_id": "cc227b0e-0ee5-41f9-862b-337910de5a0c",
+        "wall_ms": 20055,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "6": {
+        "answer": "B",
+        "reason": "左边的造型是3个正方形竖排、最下面一个右侧再接1个正方形的L形（共4块），四个选项中只有图②呈现同样的结构（①仅3块竖排、③为金字塔形、④为4块竖排），所以选B。",
+        "confidence": "high",
+        "session_id": "82b5e109-8960-4f13-8d6a-a7222675aa31",
+        "wall_ms": 99663,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "7": {
+        "answer": "A",
+        "reason": "箭头序列为↑、↓、↑、↓，呈上下交替循环规律，因此接下来应回到向上的箭头↑，即选项A。",
+        "confidence": "high",
+        "session_id": "4d3fe46c-b0a3-4f61-b9e5-094630bc6faa",
+        "wall_ms": 17533,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "8": {
+        "answer": "B",
+        "reason": "题干“先打开台灯，再从书架上拿了一本书，然后坐下来开始看”明确按“先—再—然后”排序：第一件是开灯，第二件是从书架上拿书，对应选项B“拿书”（即图中从书架取书的那幅画面）。",
+        "confidence": "high",
+        "session_id": "cb1f2006-d31b-42ac-9371-c12570b64b22",
+        "wall_ms": 26018,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "9": {
+        "answer": "B",
+        "reason": "图形按\"黑、黑、白\"循环排列，给出的第六个是白色，所以第七个应重新开始循环，是黑色。",
+        "confidence": "high",
+        "session_id": "8246eb4e-e28c-46a6-86e9-00083d2f5f3b",
+        "wall_ms": 15713,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      },
+      "10": {
+        "answer": "A",
+        "reason": "这道题考查面对挫折的态度，积木倒了后“重新搭、试不同搭法”体现了不放弃、主动尝试解决办法的积极品质，是问卷中期望的正确作答。",
+        "confidence": "high",
+        "session_id": "e80a63ec-c528-4c96-8376-8a5e4d52640f",
+        "wall_ms": 18435,
+        "steps": 2,
+        "tool_calls": 2,
+        "images": 0
+      }
+    }
+  },
+  "generated_from": "session_profiles.json"
+}

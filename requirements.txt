@@ -1,0 +1,9 @@
+# 核心依赖
+pillow>=10.0          # 题图切分、探针图生成、报告缩略图
+pyyaml>=6.0           # 可选：仅当让 config.py 回退到本机 DSH 自动探测时需要
+
+# 读取 DSH 会话转录（session.v3.jsonl.zstd）
+# 二选一：命令行 zstd（脚本默认走它）
+#   brew install zstd   /   apt install zstd
+# 或 Python 绑定：
+zstandard>=0.21

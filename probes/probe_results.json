@@ -1,0 +1,819 @@
+{
+  "deepseek/deepseek-v4-flash-vision-exp": {
+    "model": "deepseek/deepseek-v4-flash-vision-exp",
+    "ok": true,
+    "latency": 1.07,
+    "text": "7291\nRed",
+    "reasoning": "The user wants exactly two lines: 1) the numeric code shown, 2) the colour of the circle. The code is \"CODE 7291\" — numeric code shown is 7291. The circle is red. So:\n\n7291\nRed\n\nNo extra words. Should I include \"Red\" or \"red\"? Colour of circle — red. Two lines.",
+    "usage": {
+      "prompt_tokens": 262,
+      "completion_tokens": 82,
+      "total_tokens": 344,
+      "prompt_cache_hit_tokens": 128,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 77
+      }
+    },
+    "error": null,
+    "note": null
+  },
+  "google/gemini-3.6-flash": {
+    "model": "google/gemini-3.6-flash",
+    "ok": true,
+    "latency": 3.03,
+    "text": "7291\nred",
+    "reasoning": "",
+    "usage": {
+      "prompt_tokens": 1112,
+      "completion_tokens": 297,
+      "total_tokens": 1409,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 291
+      }
+    },
+    "error": null,
+    "note": null
+  },
+  "openai/gpt-5.6-luna": {
+    "model": "openai/gpt-5.6-luna",
+    "ok": true,
+    "latency": 3.11,
+    "text": "7291\nred",
+    "usage": {
+      "prompt_tokens": 98,
+      "completion_tokens": 45,
+      "total_tokens": 143,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 31
+      }
+    },
+    "error": null
+  },
+  "anthropic/claude-sonnet-4.6": {
+    "model": "anthropic/claude-sonnet-4.6",
+    "ok": true,
+    "latency": 1.78,
+    "text": "CODE7291\nred",
+    "usage": {
+      "prompt_tokens": 113,
+      "completion_tokens": 8,
+      "total_tokens": 121,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "text_tokens": 0,
+        "audio_tokens": 0,
+        "image_tokens": 0
+      },
+      "completion_tokens_details": {
+        "text_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0
+      },
+      "input_tokens": 113,
+      "output_tokens": 0,
+      "input_tokens_details": null
+    },
+    "error": null
+  },
+  "ali/qwen3-vl-plus": {
+    "model": "ali/qwen3-vl-plus",
+    "ok": true,
+    "latency": 1.23,
+    "text": "CODE7291  \nred",
+    "usage": {
+      "prompt_tokens": 112,
+      "completion_tokens": 8,
+      "total_tokens": 120,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "error": null
+  },
+  "bigmodel/glm-5v-turbo": {
+    "model": "bigmodel/glm-5v-turbo",
+    "ok": true,
+    "latency": 4.95,
+    "text": "7291\nred",
+    "usage": {
+      "prompt_tokens": 85,
+      "completion_tokens": 148,
+      "total_tokens": 233,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 141
+      }
+    },
+    "error": null
+  },
+  "bytedance/doubao-seed-2-1-pro": {
+    "model": "bytedance/doubao-seed-2-1-pro",
+    "ok": true,
+    "latency": 27.79,
+    "text": "7291\nred",
+    "usage": {
+      "prompt_tokens": 1354,
+      "completion_tokens": 1078,
+      "total_tokens": 2432,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 1072
+      }
+    },
+    "error": null
+  },
+  "moonshot/kimi-k2.5": {
+    "model": "moonshot/kimi-k2.5",
+    "ok": false,
+    "latency": 0.82,
+    "text": "7281\nred",
+    "reasoning": "",
+    "usage": {
+      "prompt_tokens": 116,
+      "completion_tokens": 5,
+      "total_tokens": 121,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "error": null,
+    "note": null
+  },
+  "x-ai/grok-4.6": {
+    "model": "x-ai/grok-4.6",
+    "ok": true,
+    "latency": 60.42,
+    "text": "7291\nred",
+    "usage": {
+      "prompt_tokens": 88,
+      "completion_tokens": 4,
+      "total_tokens": 270,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 178
+      }
+    },
+    "error": null
+  },
+  "intern/internvl3.5": {
+    "model": "intern/internvl3.5",
+    "ok": true,
+    "latency": 6.8,
+    "text": "7291\nred",
+    "usage": {
+      "prompt_tokens": 951,
+      "completion_tokens": 198,
+      "total_tokens": 1149,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "error": null
+  },
+  "ali/qwen3.5-omni-flash": {
+    "model": "ali/qwen3.5-omni-flash",
+    "ok": true,
+    "latency": 0.81,
+    "text": "CODE7291\nred",
+    "usage": {
+      "prompt_tokens": 95,
+      "completion_tokens": 8,
+      "total_tokens": 103,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "error": null
+  },
+  "intern/intern-s2-preview": {
+    "model": "intern/intern-s2-preview",
+    "ok": true,
+    "latency": 1.05,
+    "text": "1) CODE7291\n2) red",
+    "usage": {
+      "prompt_tokens": 137,
+      "completion_tokens": 13,
+      "total_tokens": 150,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "error": null
+  },
+  "openai/gpt-6-astra": {
+    "model": "openai/gpt-6-astra",
+    "ok": true,
+    "latency": 3.79,
+    "text": "7291\nred",
+    "reasoning": "",
+    "usage": {
+      "prompt_tokens": 86,
+      "completion_tokens": 36,
+      "total_tokens": 122,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 23
+      }
+    },
+    "error": null,
+    "note": null
+  },
+  "openai/gpt-5.6-sol": {
+    "model": "openai/gpt-5.6-sol",
+    "ok": true,
+    "latency": 2.21,
+    "text": "7291\nred",
+    "usage": {
+      "prompt_tokens": 98,
+      "completion_tokens": 44,
+      "total_tokens": 142,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 30
+      }
+    },
+    "error": null
+  },
+  "openai/gpt-5.6-terra": {
+    "model": "openai/gpt-5.6-terra",
+    "ok": true,
+    "latency": 2.49,
+    "text": "7291\nred",
+    "usage": {
+      "prompt_tokens": 98,
+      "completion_tokens": 33,
+      "total_tokens": 131,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 19
+      }
+    },
+    "error": null
+  },
+  "openai/gpt-5.5": {
+    "model": "openai/gpt-5.5",
+    "ok": true,
+    "latency": 3.03,
+    "text": "7291\nred",
+    "usage": {
+      "prompt_tokens": 98,
+      "completion_tokens": 60,
+      "total_tokens": 158,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 46
+      }
+    },
+    "error": null
+  },
+  "anthropic/claude-opus-5": {
+    "model": "anthropic/claude-opus-5",
+    "ok": true,
+    "latency": 2.74,
+    "text": "7291\nred",
+    "usage": {
+      "prompt_tokens": 123,
+      "completion_tokens": 50,
+      "total_tokens": 173,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "text_tokens": 0,
+        "audio_tokens": 0,
+        "image_tokens": 0
+      },
+      "completion_tokens_details": {
+        "text_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0
+      },
+      "input_tokens": 123,
+      "output_tokens": 0,
+      "input_tokens_details": null
+    },
+    "error": null
+  },
+  "anthropic/claude-sonnet-5": {
+    "model": "anthropic/claude-sonnet-5",
+    "ok": true,
+    "latency": 2.88,
+    "text": "CODE7291\nRed",
+    "usage": {
+      "prompt_tokens": 123,
+      "completion_tokens": 10,
+      "total_tokens": 133,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "text_tokens": 0,
+        "audio_tokens": 0,
+        "image_tokens": 0
+      },
+      "completion_tokens_details": {
+        "text_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0
+      },
+      "input_tokens": 123,
+      "output_tokens": 0,
+      "input_tokens_details": null
+    },
+    "error": null
+  },
+  "anthropic/claude-fable-5.1": {
+    "model": "anthropic/claude-fable-5.1",
+    "ok": true,
+    "latency": 3.26,
+    "text": "7291\nRed",
+    "usage": {
+      "prompt_tokens": 125,
+      "completion_tokens": 7,
+      "total_tokens": 132,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "text_tokens": 0,
+        "audio_tokens": 0,
+        "image_tokens": 0
+      },
+      "completion_tokens_details": {
+        "text_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 0
+      },
+      "input_tokens": 125,
+      "output_tokens": 0,
+      "input_tokens_details": null
+    },
+    "error": null
+  },
+  "google/gemini-3.8-flash": {
+    "model": "google/gemini-3.8-flash",
+    "ok": true,
+    "latency": 3.7,
+    "text": "7291\nRed",
+    "reasoning": "",
+    "usage": {
+      "prompt_tokens": 1112,
+      "completion_tokens": 196,
+      "total_tokens": 1308,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 190
+      }
+    },
+    "error": null,
+    "note": null
+  },
+  "google/gemini-3.7-flash": {
+    "model": "google/gemini-3.7-flash",
+    "ok": true,
+    "latency": 5.36,
+    "text": "7291\nRed",
+    "usage": {
+      "prompt_tokens": 1112,
+      "completion_tokens": 194,
+      "total_tokens": 1306,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 188
+      }
+    },
+    "error": null
+  },
+  "google/gemini-3.5-flash": {
+    "model": "google/gemini-3.5-flash",
+    "ok": true,
+    "latency": 3.25,
+    "text": "7291\nred",
+    "reasoning": "",
+    "usage": {
+      "prompt_tokens": 1112,
+      "completion_tokens": 308,
+      "total_tokens": 1420,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 302
+      }
+    },
+    "error": null,
+    "note": null
+  },
+  "deepseek/deepseek-v4.1-flash": {
+    "model": "deepseek/deepseek-v4.1-flash",
+    "ok": true,
+    "latency": 1.64,
+    "text": "7291\nred",
+    "reasoning": "The user wants exactly two lines: numeric code and colour of the circle. The image shows \"CODE 7291\" and a red circle.\n\nLine 1: 7291\nLine 2: red\n\nNo extra words.",
+    "usage": {
+      "prompt_tokens": 262,
+      "completion_tokens": 52,
+      "total_tokens": 314,
+      "prompt_cache_hit_tokens": 128,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 47
+      }
+    },
+    "error": null,
+    "note": null
+  },
+  "ali/qwen3.8-max-0902": {
+    "model": "ali/qwen3.8-max-0902",
+    "ok": true,
+    "latency": 5.31,
+    "text": "7291\nred",
+    "usage": {
+      "prompt_tokens": 128,
+      "completion_tokens": 124,
+      "total_tokens": 252,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 114
+      }
+    },
+    "error": null
+  },
+  "ali/qwen3.8-max": {
+    "model": "ali/qwen3.8-max",
+    "ok": true,
+    "latency": 3.17,
+    "text": "7291\nred",
+    "usage": {
+      "prompt_tokens": 128,
+      "completion_tokens": 135,
+      "total_tokens": 263,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 125
+      }
+    },
+    "error": null
+  },
+  "ali/qwen3.8-flash": {
+    "model": "ali/qwen3.8-flash",
+    "ok": true,
+    "latency": 4.03,
+    "text": "7291\nRed",
+    "usage": {
+      "prompt_tokens": 153,
+      "completion_tokens": 224,
+      "total_tokens": 377,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 214
+      }
+    },
+    "error": null
+  },
+  "moonshot/kimi-k3": {
+    "model": "moonshot/kimi-k3",
+    "ok": true,
+    "latency": 20.59,
+    "text": "7291\nred",
+    "usage": {
+      "prompt_tokens": 198,
+      "completion_tokens": 71,
+      "total_tokens": 269,
+      "prompt_tokens_details": {
+        "cached_tokens": 197
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 54
+      },
+      "output_tokens_details": {
+        "text_tokens": 0,
+        "audio_tokens": 0,
+        "reasoning_tokens": 54
+      }
+    },
+    "error": null
+  },
+  "minimax/minimax-m3": {
+    "model": "minimax/minimax-m3",
+    "ok": true,
+    "latency": 1.9,
+    "text": "7291\nred",
+    "usage": {
+      "prompt_tokens": 285,
+      "completion_tokens": 82,
+      "total_tokens": 367,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 77
+      }
+    },
+    "error": null
+  },
+  "tencent/hy4-preview": {
+    "model": "tencent/hy4-preview",
+    "ok": false,
+    "latency": 22.02,
+    "text": "",
+    "reasoning": "We need answer user says look at this image and reply exactly two lines: 1) numeric code shown 2) colour of circle. No extra words. But no image is provided in the prompt? Let's inspect conversation: user says \"Look at this image and reply with exactly two lines: 1) the numeric code shown 2) the col",
+    "usage": {
+      "prompt_tokens": 51,
+      "completion_tokens": 400,
+      "total_tokens": 451,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 400
+      }
+    },
+    "error": null,
+    "note": "reasoning-only"
+  },
+  "baidu/ernie-4.5-turbo-vl-preview": {
+    "model": "baidu/ernie-4.5-turbo-vl-preview",
+    "ok": false,
+    "latency": 0.66,
+    "text": "",
+    "usage": {},
+    "error": "HTTP 401: {\"error\":{\"message\":\"The model does not exist or you do not have access to it.\",\"type\":\"openai_error\",\"code\":\"invalid_model\"}}"
+  },
+  "longcat/longcat-2.0": {
+    "model": "longcat/longcat-2.0",
+    "ok": false,
+    "latency": 7.45,
+    "text": "I can't see an image—please attach or describe it so I can give the code and colour.",
+    "reasoning": "We are asked: \"Look at this image and reply with exactly two lines:\n1) the numeric code shown\n2) the colour of the circle\nNo extra words.\"\n\nBut there is no image provided. The user said \"Look at this image\" but didn't attach any image. I need to respond. Since I can't see an image, I must ask for th",
+    "usage": {
+      "prompt_tokens": 37,
+      "completion_tokens": 182,
+      "total_tokens": 219,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 158
+      }
+    },
+    "error": null,
+    "note": null
+  },
+  "agnes/agnes-2.5-flash": {
+    "model": "agnes/agnes-2.5-flash",
+    "ok": true,
+    "latency": 1.17,
+    "text": "7291\nRed",
+    "usage": {
+      "prompt_tokens": 151,
+      "completion_tokens": 7,
+      "total_tokens": 158,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "error": null
+  },
+  "xiaomi/mimo-v2.5-pro": {
+    "model": "xiaomi/mimo-v2.5-pro",
+    "ok": false,
+    "latency": 0.68,
+    "text": "",
+    "usage": {},
+    "error": "HTTP 404: {\"error\":{\"type\":\"openai_error\",\"code\":\"404\",\"message\":\"No endpoints found that support image input\"}}"
+  },
+  "stepfun/step-3.5-flash-2603": {
+    "model": "stepfun/step-3.5-flash-2603",
+    "ok": false,
+    "latency": 0.45,
+    "text": "",
+    "usage": {},
+    "error": "HTTP 400: {\"error\":{\"type\":\"openai_error\",\"code\":\"unknown_error\",\"message\":\"The model you requested doesnt support image input.\"}}"
+  },
+  "meta/llama-4-scout": {
+    "model": "meta/llama-4-scout",
+    "ok": true,
+    "latency": 2.53,
+    "text": "CODE7291\nRed",
+    "reasoning": "",
+    "usage": {
+      "prompt_tokens": 187,
+      "completion_tokens": 6,
+      "total_tokens": 193,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "error": null,
+    "note": null
+  },
+  "bytedance/doubao-seed-2-1-turbo": {
+    "model": "bytedance/doubao-seed-2-1-turbo",
+    "ok": true,
+    "latency": 4.27,
+    "text": "7291\nred",
+    "reasoning": "Got it,It has been confirmed that the target code is 7291 and the circle color is red, with exactly two lines of content.",
+    "usage": {
+      "prompt_tokens": 1354,
+      "completion_tokens": 68,
+      "total_tokens": 1422,
+      "prompt_tokens_details": {
+        "cached_tokens": 1336
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 62
+      }
+    },
+    "error": null,
+    "note": null
+  },
+  "moonshot/kimi-k2.7-code": {
+    "model": "moonshot/kimi-k2.7-code",
+    "ok": false,
+    "latency": 4.37,
+    "text": "7281\nred",
+    "reasoning": "We have an user asking: \"Look at this image and reply with exactly two lines:\n1) the numeric code shown\n2) the colour of the circle\nNo extra words.\" We have an image description. The image has a red circle and a green rectangle, text below says CODE7281. We need to reply exactly two lines: numeric c",
+    "usage": {
+      "prompt_tokens": 115,
+      "completion_tokens": 98,
+      "total_tokens": 213,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 94
+      }
+    },
+    "error": null,
+    "note": null
+  },
+  "x-ai/grok-4.5": {
+    "model": "x-ai/grok-4.5",
+    "ok": true,
+    "latency": 2.6,
+    "text": "7291\nred",
+    "reasoning": "The user wants me to look at the image and reply with exactly two lines:",
+    "usage": {
+      "prompt_tokens": 290,
+      "completion_tokens": 95,
+      "total_tokens": 385,
+      "prompt_tokens_details": {
+        "cached_tokens": 128
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 91
+      }
+    },
+    "error": null,
+    "note": null
+  },
+  "bigmodel/glm-5.3": {
+    "model": "bigmodel/glm-5.3",
+    "ok": false,
+    "latency": 0.0,
+    "text": "",
+    "reasoning": "",
+    "usage": {},
+    "error": "HTTP 400: {\"error\":{\"message\":\"upstream returned 400: {\\\"error\\\":{\\\"code\\\":\\\"1210\\\",\\\"message\\\":\\\"messages.content.type 参数非法，取值范围 ['text']\\\"}}\",\"type\":\"openai_error\",\"code\":\"unknown_error\"}}"
+  },
+  "bigmodel/glm-5.3-flash": {
+    "model": "bigmodel/glm-5.3-flash",
+    "ok": true,
+    "latency": 7.39,
+    "text": "CODE7291\nRed",
+    "reasoning": "The image shows a red circle on the left and a green rectangle on the right. There's text at the bottom that says \"CODE7291\".\n\nThe user asks for exactly two lines:\n1) the numeric code shown - that would be \"CODE7291\" but they say \"numeric code\" - the code shown is CODE7291. Hmm, should I include \"CO",
+    "usage": {
+      "prompt_tokens": 116,
+      "completion_tokens": 226,
+      "total_tokens": 342,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 218
+      }
+    },
+    "error": null,
+    "note": null
+  },
+  "bigmodel/glm-5.2": {
+    "model": "bigmodel/glm-5.2",
+    "ok": false,
+    "latency": 55.68,
+    "text": "8294\nblue",
+    "reasoning": "1.  **Analyze the Request:**\n    *   Input: An image (base64 encoded).\n    *   Output: Exactly two lines.\n        *   Line 1: the numeric code shown in the image.\n        *   Line 2: the colour of the circle.\n    *   Constraint: No extra words.\n\n2.  **Examine the Image:**\n    *   Since I cannot *act",
+    "usage": {
+      "prompt_tokens": 133,
+      "completion_tokens": 2495,
+      "total_tokens": 2628,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 2490
+      }
+    },
+    "error": null,
+    "note": null
+  },
+  "deepseek/deepseek-v4-pro": {
+    "model": "deepseek/deepseek-v4-pro",
+    "ok": false,
+    "latency": 8.8,
+    "text": "",
+    "reasoning": "We need answer user asks look at image and reply exactly two lines: 1) numeric code shown 2) colour of circle. No extra words. But no image provided? Need infer maybe there's image missing. We need respond? As AI cannot see image. Need maybe say cannot view image? But user requested exactly two line",
+    "usage": {
+      "prompt_tokens": 113,
+      "completion_tokens": 400,
+      "total_tokens": 513,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 400
+      }
+    },
+    "error": null,
+    "note": "reasoning-only"
+  },
+  "deepseek/deepseek-v4-flash": {
+    "model": "deepseek/deepseek-v4-flash",
+    "ok": false,
+    "latency": 0.0,
+    "text": "",
+    "reasoning": "",
+    "usage": {},
+    "error": "TimeoutError: The read operation timed out"
+  },
+  "deepseek/deepseek-ocr": {
+    "model": "deepseek/deepseek-ocr",
+    "ok": false,
+    "latency": 0.73,
+    "text": "",
+    "reasoning": "",
+    "usage": {
+      "prompt_tokens": 305,
+      "completion_tokens": 1,
+      "total_tokens": 306,
+      "prompt_tokens_details": {
+        "cached_tokens": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    },
+    "error": null,
+    "note": null
+  }
+}

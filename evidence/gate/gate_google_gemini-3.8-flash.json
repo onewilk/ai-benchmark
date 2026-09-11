@@ -1,0 +1,1 @@
+{"model":"google/gemini-3.8-flash","read_image":"fail","code":"","circle":"","rect":"","error":"cannot read \"/Users/huluwa/AI Projects/benchmark/probes/capability_test.png\" as an image: model \"google/gemini-3.8-flash\" does not declare image input; switch to an image-capable model to read images"}

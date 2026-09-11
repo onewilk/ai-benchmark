@@ -1,0 +1,341 @@
+<!DOCTYPE html><html lang='zh-CN'><head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>多模态模型 Benchmark 报告 · 8模型 × 10题</title>
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--panel2:#1c2128;--line:#2d333b;--fg:#e6edf3;--mut:#8b949e;
+       --ok:#3fb950;--bad:#f85149;--warn:#d29922;--acc:#58a6ff;--pur:#bc8cff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.65 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+nav{position:sticky;top:0;z-index:20;background:rgba(13,17,23,.97);border-bottom:1px solid var(--line);
+    padding:0 24px;backdrop-filter:blur(8px);font-size:13px}
+.navrow{display:flex;gap:4px;flex-wrap:wrap;align-items:center;min-height:48px}
+nav a{color:var(--mut);text-decoration:none;padding:7px 11px;border-radius:8px;position:relative;
+      transition:color .15s,background .15s}
+nav a:hover{color:var(--fg);background:#ffffff0d}
+nav a.active{color:var(--acc);background:#58a6ff1f;font-weight:600}
+nav a.toc-top{margin-left:auto;color:var(--mut);border:1px solid var(--line)}
+#progress{position:absolute;left:0;bottom:-1px;height:2px;background:linear-gradient(90deg,#1f6feb,#58a6ff);width:0}
+main{max-width:1180px;margin:0 auto;padding:24px 24px 120px}
+h1{font-size:26px;margin:18px 0 6px}
+/* sticky nav is 48px tall: keep anchored headings clear of it */
+h2{font-size:20px;margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line);color:var(--acc);
+   scroll-margin-top:64px}
+h3{font-size:16px;margin:22px 0 8px;scroll-margin-top:64px}
+h4{font-size:15px;margin:16px 0 6px;color:var(--pur)}
+p{margin:8px 0}
+.lead{color:var(--mut);font-size:13.5px}
+.grid{display:grid;gap:12px}
+.kpis{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px}
+.kpi .n{font-size:26px;font-weight:700;color:var(--acc);line-height:1.2}
+.kpi .l{font-size:12px;color:var(--mut);margin-top:4px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:13.5px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+th{background:var(--panel2);color:var(--mut);font-weight:600;font-size:12.5px}
+tr:hover td{background:#161b2288}
+code{font:12px ui-monospace,Menlo,monospace;background:#0b0f14;padding:1px 5px;border-radius:4px;color:#c9d1d9}
+pre{background:#0b0f14;border:1px solid var(--line);border-radius:8px;padding:12px;overflow:auto}
+blockquote{border-left:3px solid var(--line);margin:8px 0;padding:2px 0 2px 12px;color:#c9d1d9;font-size:13.5px}
+.cell{text-align:center;font-weight:700;font-family:ui-monospace,monospace}
+.c-ok{color:var(--ok)}.c-bad{color:var(--bad)}
+.pill{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:20px;border:1px solid;margin-right:4px}
+.p-ok{color:var(--ok);border-color:#2ea04366;background:#2ea0431a}
+.p-bad{color:var(--bad);border-color:#f8514966;background:#f851491a}
+.p-warn{color:var(--warn);border-color:#d2992266;background:#d299221a}
+.p-info{color:var(--acc);border-color:#58a6ff66;background:#58a6ff1a}
+.bar{height:9px;border-radius:5px;background:#21262d;overflow:hidden;min-width:80px}
+.bar>i{display:block;height:100%;background:linear-gradient(90deg,#1f6feb,#58a6ff)}
+img.crop{max-width:100%;border:1px solid var(--line);border-radius:10px;margin:10px 0;background:#000}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:860px){.cols{grid-template-columns:1fr}}
+.mut{color:var(--mut)}
+.small{font-size:12.5px}
+.warnbox{background:#f851491a;border:1px solid #f8514966;border-radius:10px;padding:12px 16px;margin:14px 0}
+.infobox{background:#58a6ff14;border:1px solid #58a6ff55;border-radius:10px;padding:12px 16px;margin:14px 0}
+.okbox{background:#2ea0431a;border:1px solid #2ea04366;border-radius:10px;padding:12px 16px;margin:14px 0}
+.reason{font-size:12.5px;color:#c9d1d9}
+.modelhd{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.score{font-size:22px;font-weight:700}
+.rank{font-size:12px;color:var(--mut)}
+/* compact per-model row (deduplicated view) */
+.mrow{display:grid;grid-template-columns:34px minmax(210px,1.4fr) 74px 130px 150px minmax(180px,1.6fr);
+      gap:10px;align-items:center;padding:9px 10px;border:1px solid transparent;border-radius:9px}
+.mrow:hover{background:var(--panel2);border-color:var(--line)}
+.mrow.head{color:var(--mut);font-size:12px;font-weight:600}
+details.appendix{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0 18px;margin:12px 0}
+details.appendix>summary{cursor:pointer;padding:14px 0;font-weight:600;color:var(--acc);list-style:none}
+details.appendix>summary::-webkit-details-marker{display:none}
+details.appendix>summary::before{content:"▸ ";color:var(--mut)}
+details.appendix[open]>summary::before{content:"▾ "}
+details.appendix>summary:hover{color:var(--fg)}
+details.appendix .body{border-top:1px solid var(--line);padding:8px 0 18px}
+.anchor-link{color:var(--mut);text-decoration:none;font-size:12px;margin-left:8px}
+</style></head><body>
+<nav><div class='navrow' id='navrow'><a href='#overview' data-target='overview'>概览</a><a href='#board' data-target='board'>排名</a><a href='#matrix' data-target='matrix'>答案矩阵</a><a href='#timing' data-target='timing'>耗时</a><a href='#questions' data-target='questions'>逐题分析</a><a href='#feedback' data-target='feedback'>反馈轮</a><a href='#validity' data-target='validity'>效度与局限</a><a href='#judge' data-target='judge'>裁判附录</a><a href='#method' data-target='method'>复现说明</a><a href='#top' class='toc-top'>↑ 顶部</a></div><div id='progress'></div></nav>
+<main id='top'>
+<h1>多模态模型 Benchmark 报告</h1>
+<p class='lead'>统一 OpenAI 兼容路由 · 8 个厂商旗舰模型 · 10 道儿童观察/逻辑题 · 每道题以独立裁切图片直发模型 · DSH Agent 多步执行 · 逐题独立会话</p>
+<div class='grid kpis'>
+<div class='kpi'><div class='n'>8</div><div class='l'>参赛模型</div></div>
+<div class='kpi'><div class='n'>10</div><div class='l'>题目</div></div>
+<div class='kpi'><div class='n'>80</div><div class='l'>首轮作答运行数</div></div>
+<div class='kpi'><div class='n'>80/80</div><div class='l'>诚实直读图审计通过</div></div>
+<div class='kpi'><div class='n'>2</div><div class='l'>反馈轮（提示/无提示）</div></div>
+<div class='kpi'><div class='n'>0</div><div class='l'>作弊样本</div></div>
+</div>
+<div class='okbox'><b>一句话结论：</b>8 个模型在 10 题里 9 题答案完全一致，唯一真实分水岭是 <b>Q2（找不同）</b>；而 <b>Q8</b> 是一道出色的陷阱题，<b>8 个模型全部上钩</b>——它们只数了「先/再/然后」三项，全部漏掉句首的「走进房间」，因此把「第二件事」误判为拿书。此外只有 2/8 的模型在被明确告知正确答案后能真正修正 Q8 的错误信念。</div>
+<h2 id='overview'>概览</h2>
+<div class='card'><b>三条要点</b><ol class='small'><li><b>这是一套偏简单的卷子</b>：10 题里 9 题 8 个模型答案完全一致，得分只落在 8/10 与 9/10；真正的区分点只有 Q2 与 Q8。</li><li><b>Q8 是全场最有价值的题</b>：它测的是「把整句叙事建模成事件序列」，8 个模型全部套用「先/再/然后」模板、漏掉句首动作，0/8。</li><li><b>被告知正确答案不等于会改</b>：去掉一切提示后，仍只有 2/8 修正了 Q8 的错误信念。</li></ol><details class='appendix'><summary>执行方式（点开）</summary><div class='body'><ul class='small'><li>题图 614×6822px（深色长截图，sha256 <code>68314100…5c5350d70</code>）按行空白切成 10 张独立题图——整图直发会被压缩到文字不可读，那测的就不是「能不能看图」。</li><li>每个 (模型 × 题目) 一次<b>独立 agent 会话</b>，只拿到本题图片，无跨题上下文、无答案泄漏。</li><li>模型被限定只能用 <code>read_image</code> 直读图片，禁用 bash/OCR/读文件等旁路；执行后逐条审计转录（<code>read_image</code> 是否真成功、有无违规工具调用）。</li><li>耗时取自转录里 <code>step/start|end</code>、<code>tool/call|result</code> 的毫秒时间戳，不是模型自述。</li></ul></div></details></div>
+<h2 id='results'>结果</h2>
+<h3 id='board'>排名与得分</h3>
+<p class='lead'>官方 key <code>CCBCBBAABA</code>。同分按总耗时升序排列；这只是本卷排序，样本仅 10 题，不足以推出通用能力排名。</p>
+<table><thead><tr><th>#</th><th>模型</th><th>得分</th><th>错题</th><th>总耗时</th><th>中位/题</th><th>反馈轮 Q8</th><th>一句话点评</th></tr></thead><tbody>
+<tr><td>1</td><td><code>openai/gpt-5.6-sol</code><div class='mut small'>OpenAI</div></td><td class='score'>9/10</td><td class='c-bad'>Q8</td><td>76.1s</td><td>7.4s</td><td><span class='pill p-bad'>坚持 B</span></td><td class='small'>全场最快 · 反馈轮坚持错误 · 错题全部 high 置信</td></tr>
+<tr><td>2</td><td><code>anthropic/claude-opus-5</code><div class='mut small'>Anthropic</div></td><td class='score'>9/10</td><td class='c-bad'>Q8</td><td>132.9s</td><td>10.7s</td><td><span class='pill p-bad'>坚持 B</span></td><td class='small'>速位 #4 · Q2 字母对但第三处说错 · 反馈轮坚持错误 · 错题全部 high 置信</td></tr>
+<tr><td>3</td><td><code>bytedance/doubao-seed-2-1-pro</code><div class='mut small'>字节豆包</div></td><td class='score'>9/10</td><td class='c-bad'>Q8</td><td>194.3s</td><td>15.0s</td><td><span class='pill p-bad'>坚持 B</span></td><td class='small'>速位 #5 · 反馈轮坚持错误 · 错题全部 high 置信</td></tr>
+<tr><td>4</td><td><code>bigmodel/glm-5.3-flash</code><div class='mut small'>智谱 GLM</div></td><td class='score'>9/10</td><td class='c-bad'>Q8</td><td>343.3s</td><td>20.1s</td><td><span class='pill p-ok'>改判为 A</span></td><td class='small'>速位 #7 · 反馈轮修正为 A · 错题全部 high 置信</td></tr>
+<tr><td>5</td><td><code>moonshot/kimi-k3</code><div class='mut small'>月之暗面</div></td><td class='score'>9/10</td><td class='c-bad'>Q8</td><td>496.4s</td><td>50.3s</td><td><span class='pill p-bad'>坚持 B</span></td><td class='small'>全场最慢 · Q2 字母对但第三处说错 · 反馈轮坚持错误 · 错题全部 high 置信</td></tr>
+<tr><td>6</td><td><code>google/gemini-3.8-flash</code><div class='mut small'>Google</div></td><td class='score'>8/10</td><td class='c-bad'>Q2、Q8</td><td>124.2s</td><td>10.8s</td><td><span class='pill p-bad'>坚持 B</span></td><td class='small'>速位 #2 · Q2 漏检（未发现「云」） · 反馈轮坚持错误 · 错题全部 high 置信</td></tr>
+<tr><td>7</td><td><code>deepseek/deepseek-v4.1-flash</code><div class='mut small'>DeepSeek</div></td><td class='score'>8/10</td><td class='c-bad'>Q2、Q8</td><td>130.4s</td><td>4.1s</td><td><span class='pill p-ok'>改判为 A</span></td><td class='small'>速位 #3 · Q2 漏检（未发现「云」） · 反馈轮修正为 A · 错题全部 high 置信</td></tr>
+<tr><td>8</td><td><code>ali/qwen3.8-max-0902</code><div class='mut small'>阿里 Qwen</div></td><td class='score'>8/10</td><td class='c-bad'>Q2、Q8</td><td>332.7s</td><td>14.4s</td><td><span class='pill p-bad'>坚持 B</span></td><td class='small'>速位 #6 · Q2 计数偏差 · 反馈轮坚持错误 · 错题全部 high 置信</td></tr>
+</tbody></table>
+<p class='small mut'>同分按总耗时升序。「反馈轮 Q8」列为<b>无提示</b>轮结果——hinted 轮已被评测方提示污染并作废。耗时只反映端到端时延（含读图与推理），未做机器负载归一化。</p>
+<h3 id='matrix'>答案矩阵</h3>
+<table><thead><tr><th>模型</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Q5</th><th>Q6</th><th>Q7</th><th>Q8</th><th>Q9</th><th>Q10</th><th>得分</th></tr></thead><tbody>
+<tr><td class='mut'>官方答案</td><td class='cell'>C</td><td class='cell'>C</td><td class='cell'>B</td><td class='cell'>C</td><td class='cell'>B</td><td class='cell'>B</td><td class='cell'>A</td><td class='cell'>A</td><td class='cell'>B</td><td class='cell'>A</td><td></td></tr>
+<tr><td><code>openai/gpt-5.6-sol</code></td><td class='cell c-ok'>C</td><td class='cell c-ok'>C</td><td class='cell c-ok'>B</td><td class='cell c-ok'>C</td><td class='cell c-ok'>B</td><td class='cell c-ok'>B</td><td class='cell c-ok'>A</td><td class='cell c-bad'>B</td><td class='cell c-ok'>B</td><td class='cell c-ok'>A</td><td>9/10</td></tr>
+<tr><td><code>anthropic/claude-opus-5</code></td><td class='cell c-ok'>C</td><td class='cell c-ok'>C</td><td class='cell c-ok'>B</td><td class='cell c-ok'>C</td><td class='cell c-ok'>B</td><td class='cell c-ok'>B</td><td class='cell c-ok'>A</td><td class='cell c-bad'>B</td><td class='cell c-ok'>B</td><td class='cell c-ok'>A</td><td>9/10</td></tr>
+<tr><td><code>bytedance/doubao-seed-2-1-pro</code></td><td class='cell c-ok'>C</td><td class='cell c-ok'>C</td><td class='cell c-ok'>B</td><td class='cell c-ok'>C</td><td class='cell c-ok'>B</td><td class='cell c-ok'>B</td><td class='cell c-ok'>A</td><td class='cell c-bad'>B</td><td class='cell c-ok'>B</td><td class='cell c-ok'>A</td><td>9/10</td></tr>
+<tr><td><code>bigmodel/glm-5.3-flash</code></td><td class='cell c-ok'>C</td><td class='cell c-ok'>C</td><td class='cell c-ok'>B</td><td class='cell c-ok'>C</td><td class='cell c-ok'>B</td><td class='cell c-ok'>B</td><td class='cell c-ok'>A</td><td class='cell c-bad'>B</td><td class='cell c-ok'>B</td><td class='cell c-ok'>A</td><td>9/10</td></tr>
+<tr><td><code>moonshot/kimi-k3</code></td><td class='cell c-ok'>C</td><td class='cell c-ok'>C</td><td class='cell c-ok'>B</td><td class='cell c-ok'>C</td><td class='cell c-ok'>B</td><td class='cell c-ok'>B</td><td class='cell c-ok'>A</td><td class='cell c-bad'>B</td><td class='cell c-ok'>B</td><td class='cell c-ok'>A</td><td>9/10</td></tr>
+<tr><td><code>google/gemini-3.8-flash</code></td><td class='cell c-ok'>C</td><td class='cell c-bad'>B</td><td class='cell c-ok'>B</td><td class='cell c-ok'>C</td><td class='cell c-ok'>B</td><td class='cell c-ok'>B</td><td class='cell c-ok'>A</td><td class='cell c-bad'>B</td><td class='cell c-ok'>B</td><td class='cell c-ok'>A</td><td>8/10</td></tr>
+<tr><td><code>deepseek/deepseek-v4.1-flash</code></td><td class='cell c-ok'>C</td><td class='cell c-bad'>B</td><td class='cell c-ok'>B</td><td class='cell c-ok'>C</td><td class='cell c-ok'>B</td><td class='cell c-ok'>B</td><td class='cell c-ok'>A</td><td class='cell c-bad'>B</td><td class='cell c-ok'>B</td><td class='cell c-ok'>A</td><td>8/10</td></tr>
+<tr><td><code>ali/qwen3.8-max-0902</code></td><td class='cell c-ok'>C</td><td class='cell c-bad'>D</td><td class='cell c-ok'>B</td><td class='cell c-ok'>C</td><td class='cell c-ok'>B</td><td class='cell c-ok'>B</td><td class='cell c-ok'>A</td><td class='cell c-bad'>B</td><td class='cell c-ok'>B</td><td class='cell c-ok'>A</td><td>8/10</td></tr>
+</tbody></table>
+<p class='small mut'>绿色＝与官方 key 一致，红色＝不一致。注意矩阵「一致」不等于视觉推理正确：Q2 有 2 个模型字母答对但把第三处差异说错（见下）。</p>
+<h3 id='timing'>步骤与耗时</h3>
+<p class='lead'>每次运行固定为「读图 → 作答」两段式 agent 流程（步数/次≈2）。注意口径：<b>「read_image 调用」只统计本地读取并挂载图片文件的耗时（毫秒级），不含模型的视觉计算</b>——模型真正「看图」发生在随后那次 LLM 请求里，因此被计入「作答步」。作答步＝整次运行里除本地挂载外的全部时间，其中既含视觉理解，也含推理与生成。</p>
+<table><thead><tr><th>模型</th><th>步数/次</th><th>read_image 调用均耗时</th><th>作答步均耗时</th><th>中位/题</th><th>最慢一题</th></tr></thead><tbody>
+<tr><td><code>openai/gpt-5.6-sol</code></td><td>2.0</td><td>0.06s</td><td>7.55s</td><td>7.4s</td><td>Q2 (10.3s)</td></tr>
+<tr><td><code>anthropic/claude-opus-5</code></td><td>2.0</td><td>0.07s</td><td>13.21s</td><td>10.7s</td><td>Q2 (33.6s)</td></tr>
+<tr><td><code>bytedance/doubao-seed-2-1-pro</code></td><td>2.0</td><td>0.04s</td><td>19.39s</td><td>15.0s</td><td>Q2 (39.4s)</td></tr>
+<tr><td><code>bigmodel/glm-5.3-flash</code></td><td>2.0</td><td>0.08s</td><td>34.26s</td><td>20.1s</td><td>Q6 (99.7s)</td></tr>
+<tr><td><code>moonshot/kimi-k3</code></td><td>2.0</td><td>0.13s</td><td>49.51s</td><td>50.3s</td><td>Q3 (81.6s)</td></tr>
+<tr><td><code>google/gemini-3.8-flash</code></td><td>2.0</td><td>0.06s</td><td>12.36s</td><td>10.8s</td><td>Q1 (24.3s)</td></tr>
+<tr><td><code>deepseek/deepseek-v4.1-flash</code></td><td>2.1</td><td>0.08s</td><td>12.96s</td><td>4.1s</td><td>Q6 (92.9s)</td></tr>
+<tr><td><code>ali/qwen3.8-max-0902</code></td><td>2.0</td><td>0.06s</td><td>33.22s</td><td>14.4s</td><td>Q2 (175.9s)</td></tr>
+</tbody></table>
+<h3>逐题耗时热力图（秒）</h3>
+<table><thead><tr><th>模型</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Q5</th><th>Q6</th><th>Q7</th><th>Q8</th><th>Q9</th><th>Q10</th><th>合计</th></tr></thead><tbody>
+<tr><td><code>openai/gpt-5.6-sol</code></td><td class='cell' style='background:rgba(248,81,73,0.75)'>7.8</td><td class='cell' style='background:rgba(248,81,73,0.85)'>10.3</td><td class='cell' style='background:rgba(248,81,73,0.72)'>7.4</td><td class='cell' style='background:rgba(248,81,73,0.65)'>6.7</td><td class='cell' style='background:rgba(248,81,73,0.64)'>6.6</td><td class='cell' style='background:rgba(248,81,73,0.72)'>7.5</td><td class='cell' style='background:rgba(248,81,73,0.65)'>6.7</td><td class='cell' style='background:rgba(248,81,73,0.81)'>8.3</td><td class='cell' style='background:rgba(248,81,73,0.72)'>7.5</td><td class='cell' style='background:rgba(248,81,73,0.71)'>7.3</td><td>76.1</td></tr>
+<tr><td><code>anthropic/claude-opus-5</code></td><td class='cell' style='background:rgba(248,81,73,0.41)'>13.6</td><td class='cell' style='background:rgba(248,81,73,0.85)'>33.6</td><td class='cell' style='background:rgba(248,81,73,0.29)'>9.6</td><td class='cell' style='background:rgba(248,81,73,0.26)'>8.8</td><td class='cell' style='background:rgba(248,81,73,0.38)'>12.9</td><td class='cell' style='background:rgba(248,81,73,0.33)'>11.1</td><td class='cell' style='background:rgba(248,81,73,0.24)'>8.1</td><td class='cell' style='background:rgba(248,81,73,0.30)'>10.2</td><td class='cell' style='background:rgba(248,81,73,0.49)'>16.5</td><td class='cell' style='background:rgba(248,81,73,0.26)'>8.6</td><td>132.9</td></tr>
+<tr><td><code>bytedance/doubao-seed-2-1-pro</code></td><td class='cell' style='background:rgba(248,81,73,0.85)'>33.4</td><td class='cell' style='background:rgba(248,81,73,0.85)'>39.4</td><td class='cell' style='background:rgba(248,81,73,0.29)'>11.5</td><td class='cell' style='background:rgba(248,81,73,0.59)'>23.2</td><td class='cell' style='background:rgba(248,81,73,0.28)'>11.0</td><td class='cell' style='background:rgba(248,81,73,0.59)'>23.3</td><td class='cell' style='background:rgba(248,81,73,0.28)'>11.1</td><td class='cell' style='background:rgba(248,81,73,0.29)'>11.2</td><td class='cell' style='background:rgba(248,81,73,0.44)'>17.5</td><td class='cell' style='background:rgba(248,81,73,0.32)'>12.6</td><td>194.3</td></tr>
+<tr><td><code>bigmodel/glm-5.3-flash</code></td><td class='cell' style='background:rgba(248,81,73,0.24)'>24.0</td><td class='cell' style='background:rgba(248,81,73,0.85)'>86.1</td><td class='cell' style='background:rgba(248,81,73,0.16)'>15.7</td><td class='cell' style='background:rgba(248,81,73,0.20)'>20.1</td><td class='cell' style='background:rgba(248,81,73,0.20)'>20.1</td><td class='cell' style='background:rgba(248,81,73,0.85)'>99.7</td><td class='cell' style='background:rgba(248,81,73,0.18)'>17.5</td><td class='cell' style='background:rgba(248,81,73,0.26)'>26.0</td><td class='cell' style='background:rgba(248,81,73,0.16)'>15.7</td><td class='cell' style='background:rgba(248,81,73,0.18)'>18.4</td><td>343.3</td></tr>
+<tr><td><code>moonshot/kimi-k3</code></td><td class='cell' style='background:rgba(248,81,73,0.62)'>50.3</td><td class='cell' style='background:rgba(248,81,73,0.62)'>50.3</td><td class='cell' style='background:rgba(248,81,73,0.85)'>81.6</td><td class='cell' style='background:rgba(248,81,73,0.49)'>40.3</td><td class='cell' style='background:rgba(248,81,73,0.62)'>50.3</td><td class='cell' style='background:rgba(248,81,73,0.49)'>40.1</td><td class='cell' style='background:rgba(248,81,73,0.49)'>40.3</td><td class='cell' style='background:rgba(248,81,73,0.49)'>40.3</td><td class='cell' style='background:rgba(248,81,73,0.63)'>51.5</td><td class='cell' style='background:rgba(248,81,73,0.63)'>51.4</td><td>496.4</td></tr>
+<tr><td><code>google/gemini-3.8-flash</code></td><td class='cell' style='background:rgba(248,81,73,0.85)'>24.3</td><td class='cell' style='background:rgba(248,81,73,0.58)'>14.1</td><td class='cell' style='background:rgba(248,81,73,0.40)'>9.7</td><td class='cell' style='background:rgba(248,81,73,0.37)'>9.1</td><td class='cell' style='background:rgba(248,81,73,0.51)'>12.3</td><td class='cell' style='background:rgba(248,81,73,0.39)'>9.5</td><td class='cell' style='background:rgba(248,81,73,0.35)'>8.5</td><td class='cell' style='background:rgba(248,81,73,0.62)'>15.1</td><td class='cell' style='background:rgba(248,81,73,0.47)'>11.5</td><td class='cell' style='background:rgba(248,81,73,0.42)'>10.1</td><td>124.2</td></tr>
+<tr><td><code>deepseek/deepseek-v4.1-flash</code></td><td class='cell' style='background:rgba(248,81,73,0.07)'>6.2</td><td class='cell' style='background:rgba(248,81,73,0.05)'>4.9</td><td class='cell' style='background:rgba(248,81,73,0.04)'>3.9</td><td class='cell' style='background:rgba(248,81,73,0.04)'>3.8</td><td class='cell' style='background:rgba(248,81,73,0.04)'>3.3</td><td class='cell' style='background:rgba(248,81,73,0.85)'>92.9</td><td class='cell' style='background:rgba(248,81,73,0.03)'>2.9</td><td class='cell' style='background:rgba(248,81,73,0.05)'>4.3</td><td class='cell' style='background:rgba(248,81,73,0.05)'>4.9</td><td class='cell' style='background:rgba(248,81,73,0.04)'>3.4</td><td>130.4</td></tr>
+<tr><td><code>ali/qwen3.8-max-0902</code></td><td class='cell' style='background:rgba(248,81,73,0.25)'>43.7</td><td class='cell' style='background:rgba(248,81,73,0.85)'>175.9</td><td class='cell' style='background:rgba(248,81,73,0.07)'>12.3</td><td class='cell' style='background:rgba(248,81,73,0.07)'>13.1</td><td class='cell' style='background:rgba(248,81,73,0.08)'>13.8</td><td class='cell' style='background:rgba(248,81,73,0.09)'>15.1</td><td class='cell' style='background:rgba(248,81,73,0.06)'>10.7</td><td class='cell' style='background:rgba(248,81,73,0.11)'>18.9</td><td class='cell' style='background:rgba(248,81,73,0.12)'>20.8</td><td class='cell' style='background:rgba(248,81,73,0.05)'>8.6</td><td>332.7</td></tr>
+</tbody></table>
+<p class='small mut'>颜色越红表示该题耗时越长。可清楚看到几个异常长尾：DeepSeek 在 Q6 花了 92.9s（其余题多为 3–5s）、Qwen 在 Q2 花了 175.9s 却答错、GLM 在 Q6 花了 99.7s、Kimi K3 几乎每题都在 40–80s。</p>
+<h2 id='questions'>逐题分析</h2>
+<div class='card'><h3>第 1 题 &nbsp;<span class='pill p-ok'>官方 C · 正确 8/8</span></h3>
+<p><b>下面4个机器人中，哪两个长得完全一样？</b></p>
+<p class='small'><b>A</b> ①和② ｜ <b>B</b> ②和③ ｜ <b>C</b> ①和③ ｜ <b>D</b> ②和④</p>
+<p class='small'><span class='pill p-ok'>C: 8</span></p>
+<img class='crop' src='data/paper/questions/Q01.png' alt='第1题原图'>
+<p class='small mut'>▲ 第 1 题原图 · 含配图 （<code>data/paper/questions/Q01.png</code>，发送给模型的就是这张裁切图）</p>
+</div>
+<div class='card'><h3>第 2 题 &nbsp;<span class='pill p-warn'>官方 C · 正确 5/8</span></h3>
+<p><b>下面两幅图有几处不一样的地方？</b></p>
+<p class='small'><b>A</b> 1处 ｜ <b>B</b> 2处 ｜ <b>C</b> 3处 ｜ <b>D</b> 4处</p>
+<div class='infobox small'>三处差异经出题方确认为 <b>云、窗户、烟囱</b>。答 B 的模型只找到烟囱与窗户（漏掉云）；答 D 的模型多计了草地/云位置。更值得注意的是：答 C 的 5 个模型里，<b>Claude 说是「树的大小」、Kimi 说是「花朵数量」</b>——字母对了，第三处理由是错的。</div>
+<p class='small'><span class='pill p-bad'>B: 2</span>　<span class='pill p-ok'>C: 5</span>　<span class='pill p-bad'>D: 1</span></p>
+<table><thead><tr><th>模型</th><th>答案</th><th>置信</th><th>模型给出的理由</th></tr></thead><tbody>
+<tr><td><code>openai/gpt-5.6-sol</code></td><td class='cell c-ok'>C</td><td>high</td><td class='reason'>两图有三处不同：左图多了烟囱、云朵数量不同，且窗户分别为圆形和方形。</td></tr>
+<tr><td><code>anthropic/claude-opus-5</code></td><td class='cell c-ok'>C</td><td>medium</td><td class='reason'>两幅图对比可见三处不同：左图房顶有烟囱（并冒烟）而右图没有、左图墙上的窗户是圆形而右图是方形、以及右侧那棵树的大小（位置）不一样，共3处。</td></tr>
+<tr><td><code>bytedance/doubao-seed-2-1-pro</code></td><td class='cell c-ok'>C</td><td>high</td><td class='reason'>两幅图共有3处不同：左图屋顶有灰色烟囱而右图没有、左图的窗户是圆形而右图是方形、左图天空有两朵白云而右图只有一朵。</td></tr>
+<tr><td><code>bigmodel/glm-5.3-flash</code></td><td class='cell c-ok'>C</td><td>medium</td><td class='reason'>两图共有3处不同：左图屋顶有烟囱而右图没有、左图窗户是圆形而右图是方形、左图天上多一朵小云（左2朵、右1朵），其余太阳、门、花、树、草地均相同。</td></tr>
+<tr><td><code>moonshot/kimi-k3</code></td><td class='cell c-ok'>C</td><td>medium</td><td class='reason'>两图共有3处不同：左图屋顶有烟囱而右图没有，左图窗户是圆形而右图是方形，底部花朵数量不同（右图树旁多一朵粉色花）。</td></tr>
+<tr><td><code>google/gemini-3.8-flash</code></td><td class='cell c-bad'>B</td><td>high</td><td class='reason'>两幅图共有两处不同，分别是左图屋顶有烟囱而右图没有，以及左图的窗户为圆形而右图为正方形。</td></tr>
+<tr><td><code>deepseek/deepseek-v4.1-flash</code></td><td class='cell c-bad'>B</td><td>high</td><td class='reason'>两图对比只有两处不同：左图屋顶有烟囱而右图没有，左图墙上是圆形窗户而右图是方形窗户，其余（太阳、树、花朵、门）均相同。</td></tr>
+<tr><td><code>ali/qwen3.8-max-0902</code></td><td class='cell c-bad'>D</td><td>medium</td><td class='reason'>两幅图共有4处不同：左图屋顶有烟囱而右图没有、左图窗户为圆形而右图为方形、左图草地横贯整个画面而右图草地左段缺失、云朵位置不同（左图在树上方靠右边缘，右图在屋顶右上方）。</td></tr>
+</tbody></table>
+<img class='crop' src='data/paper/questions/Q02.png' alt='第2题原图'>
+<p class='small mut'>▲ 第 2 题原图 · 含配图 （<code>data/paper/questions/Q02.png</code>，发送给模型的就是这张裁切图）</p>
+</div>
+<div class='card'><h3>第 3 题 &nbsp;<span class='pill p-ok'>官方 B · 正确 8/8</span></h3>
+<p><b>小老鼠要走到终点吃到奶酪，它应该走哪条路？</b></p>
+<p class='small'><b>A</b> 路线① ｜ <b>B</b> 路线② ｜ <b>C</b> 路线③ ｜ <b>D</b> 路线④</p>
+<p class='small'><span class='pill p-ok'>B: 8</span></p>
+<img class='crop' src='data/paper/questions/Q03.png' alt='第3题原图'>
+<p class='small mut'>▲ 第 3 题原图 · 含配图 （<code>data/paper/questions/Q03.png</code>，发送给模型的就是这张裁切图）</p>
+</div>
+<div class='card'><h3>第 4 题 &nbsp;<span class='pill p-ok'>官方 C · 正确 8/8</span></h3>
+<p><b>图中有几个蓝色的正方形？</b></p>
+<p class='small'><b>A</b> 2个 ｜ <b>B</b> 3个 ｜ <b>C</b> 4个 ｜ <b>D</b> 5个</p>
+<p class='small'><span class='pill p-ok'>C: 8</span></p>
+<img class='crop' src='data/paper/questions/Q04.png' alt='第4题原图'>
+<p class='small mut'>▲ 第 4 题原图 · 含配图 （<code>data/paper/questions/Q04.png</code>，发送给模型的就是这张裁切图）</p>
+</div>
+<div class='card'><h3>第 5 题 &nbsp;<span class='pill p-ok'>官方 B · 正确 8/8</span></h3>
+<p><b>三只小动物排队：小兔在最前面，小狗在中间，小猫在最后面。谁最高？</b></p>
+<p class='small'><b>A</b> 小兔 ｜ <b>B</b> 小狗 ｜ <b>C</b> 小猫 ｜ <b>D</b> 一样高</p>
+<p class='small'><span class='pill p-ok'>B: 8</span></p>
+<img class='crop' src='data/paper/questions/Q05.png' alt='第5题原图'>
+<p class='small mut'>▲ 第 5 题原图 · 含配图 （<code>data/paper/questions/Q05.png</code>，发送给模型的就是这张裁切图）</p>
+</div>
+<div class='card'><h3>第 6 题 &nbsp;<span class='pill p-ok'>官方 B · 正确 8/8</span></h3>
+<p><b>右边哪一个造型和左边的图案一致？</b></p>
+<p class='small'><b>A</b> 图① ｜ <b>B</b> 图② ｜ <b>C</b> 图③ ｜ <b>D</b> 图④</p>
+<p class='small'><span class='pill p-ok'>B: 8</span></p>
+<img class='crop' src='data/paper/questions/Q06.png' alt='第6题原图'>
+<p class='small mut'>▲ 第 6 题原图 · 含配图 （<code>data/paper/questions/Q06.png</code>，发送给模型的就是这张裁切图）</p>
+</div>
+<div class='card'><h3>第 7 题 &nbsp;<span class='pill p-ok'>官方 A · 正确 8/8</span></h3>
+<p><b>箭头的变化规律是：↑、↓、↑、↓，接下来应该是什么方向？</b></p>
+<p class='small'><b>A</b> ↑ ｜ <b>B</b> ↓ ｜ <b>C</b> ← ｜ <b>D</b> →</p>
+<p class='small'><span class='pill p-ok'>A: 8</span></p>
+<img class='crop' src='data/paper/questions/Q07.png' alt='第7题原图'>
+<p class='small mut'>▲ 第 7 题原图 · 纯文本题干（无插图） （<code>data/paper/questions/Q07.png</code>，发送给模型的就是这张裁切图）</p>
+</div>
+<div class='card'><h3>第 8 题 &nbsp;<span class='pill p-bad'>官方 A · 正确 0/8</span></h3>
+<p><b>听老师说一句话，选出对应的图片。读题文本：“小明走进房间，先打开台灯，再从书架上拿了一本书，然后坐下来开始看。”请问：小明做的第二件事情是什么？</b></p>
+<p class='small'><b>A</b> 开灯 ｜ <b>B</b> 拿书 ｜ <b>C</b> 坐下 ｜ <b>D</b> 喝水</p>
+<div class='infobox small'>本题是<b>陷阱题</b>：完整动作链是 <b>走进房间(1) → 打开台灯(2) → 从书架拿书(3) → 坐下看书(4)</b>，所以「第二件事情」= <b>开灯 = A</b>。8 个模型全部只数「先/再/然后」标记的三项，集体漏掉句首的「走进房间」，全部答 B。<b>0/8</b> 是本卷唯一真正的全员失败。</div>
+<p class='small'><span class='pill p-bad'>B: 8</span></p>
+<table><thead><tr><th>模型</th><th>答案</th><th>置信</th><th>模型给出的理由</th></tr></thead><tbody>
+<tr><td><code>openai/gpt-5.6-sol</code></td><td class='cell c-bad'>B</td><td>high</td><td class='reason'>小明先开灯，第二件事是从书架上拿书，因此选B。</td></tr>
+<tr><td><code>anthropic/claude-opus-5</code></td><td class='cell c-bad'>B</td><td>high</td><td class='reason'>文本顺序是&quot;先打开台灯，再从书架上拿一本书，然后坐下来看&quot;，所以第二件事是拿书，对应书架前取书的图片B。</td></tr>
+<tr><td><code>bytedance/doubao-seed-2-1-pro</code></td><td class='cell c-bad'>B</td><td>high</td><td class='reason'>根据题干描述的动作顺序，小明第一件事是打开台灯，第二件事就是从书架上拿书，对应选项B。</td></tr>
+<tr><td><code>bigmodel/glm-5.3-flash</code></td><td class='cell c-bad'>B</td><td>high</td><td class='reason'>题干“先打开台灯，再从书架上拿了一本书，然后坐下来开始看”明确按“先—再—然后”排序：第一件是开灯，第二件是从书架上拿书，对应选项B“拿书”（即图中从书架取书的那幅画面）。</td></tr>
+<tr><td><code>moonshot/kimi-k3</code></td><td class='cell c-bad'>B</td><td>high</td><td class='reason'>题目中小明做事的顺序是&quot;先打开台灯（第一件），再从书架上拿了一本书（第二件），然后坐下来看&quot;，所以第二件事是从书架上拿书，对应选项B。</td></tr>
+<tr><td><code>google/gemini-3.8-flash</code></td><td class='cell c-bad'>B</td><td>high</td><td class='reason'>根据题目文本，小明“先打开台灯，再从书架上拿了一本书”，因此做的第二件事情是拿书。</td></tr>
+<tr><td><code>deepseek/deepseek-v4.1-flash</code></td><td class='cell c-bad'>B</td><td>high</td><td class='reason'>文中顺序为&quot;先打开台灯→再从书架上拿了一本书→然后坐下看&quot;，所以第二件事是拿书，对应选项B。</td></tr>
+<tr><td><code>ali/qwen3.8-max-0902</code></td><td class='cell c-bad'>B</td><td>high</td><td class='reason'>句中顺序为&quot;先打开台灯（第一件）、再从书架上拿了一本书（第二件）、然后坐下来开始看（第三件）&quot;，故第二件事是拿书，对应选项B（图中B为从书架取书）。</td></tr>
+</tbody></table>
+<img class='crop' src='data/paper/questions/Q08.png' alt='第8题原图'>
+<p class='small mut'>▲ 第 8 题原图 · 含配图 （<code>data/paper/questions/Q08.png</code>，发送给模型的就是这张裁切图）</p>
+</div>
+<div class='card'><h3>第 9 题 &nbsp;<span class='pill p-ok'>官方 B · 正确 8/8</span></h3>
+<p><b>图形的规律是：●、●、○、●、●、○，接下来应该是什么颜色？</b></p>
+<p class='small'><b>A</b> ○ (白色) ｜ <b>B</b> ● (黑色) ｜ <b>C</b> 黑色和白色都可以 ｜ <b>D</b> 不知道</p>
+<p class='small'><span class='pill p-ok'>B: 8</span></p>
+<img class='crop' src='data/paper/questions/Q09.png' alt='第9题原图'>
+<p class='small mut'>▲ 第 9 题原图 · 纯文本题干（无插图） （<code>data/paper/questions/Q09.png</code>，发送给模型的就是这张裁切图）</p>
+</div>
+<div class='card'><h3>第 10 题 &nbsp;<span class='pill p-ok'>官方 A · 正确 8/8</span></h3>
+<p><b>如果搭积木的时候积木倒了，你会怎么做？</b></p>
+<p class='small'><b>A</b> 重新搭，试试不同的搭法 ｜ <b>B</b> 有点不开心，不想搭了 ｜ <b>C</b> 叫爸爸妈妈帮忙 ｜ <b>D</b> 换一个玩具玩</p>
+<p class='small'><span class='pill p-ok'>A: 8</span></p>
+<img class='crop' src='data/paper/questions/Q10.png' alt='第10题原图'>
+<p class='small mut'>▲ 第 10 题原图 · 纯文本题干（无插图） （<code>data/paper/questions/Q10.png</code>，发送给模型的就是这张裁切图）</p>
+</div>
+<h2 id='feedback'>反馈轮实验：被告知正确答案之后</h2>
+<div class='warnbox small'><b>先披露一个我自己的方法论错误。</b>第一轮反馈时我在 dossier 里写了「官方 Q8 标注可能有误」的提示——这等于替模型洗白了错误，结果 <b>8/8 模型都「反对」</b>，该轮数据<b>不可用于任何结论</b>。第二轮去掉全部提示（模型必须自己比对差异），才得到有效测量。</div>
+<table><thead><tr><th>模型</th><th>带提示轮 Q8</th><th>无提示轮 Q8</th><th>无提示轮最终答案</th><th>Q2（无提示轮）</th></tr></thead><tbody>
+<tr><td><code>openai/gpt-5.6-sol</code></td><td><span class='pill p-bad'>反对</span></td><td><span class='pill p-bad'>反对/坚持</span></td><td class='cell'>B</td><td><span class='pill p-bad'>反对/坚持</span></td></tr>
+<tr><td><code>anthropic/claude-opus-5</code></td><td><span class='pill p-bad'>反对</span></td><td><span class='pill p-bad'>反对/坚持</span></td><td class='cell'>B</td><td><span class='pill p-bad'>反对/坚持</span></td></tr>
+<tr><td><code>bytedance/doubao-seed-2-1-pro</code></td><td><span class='pill p-bad'>反对</span></td><td><span class='pill p-bad'>反对/坚持</span></td><td class='cell'>B</td><td><span class='pill p-bad'>反对/坚持</span></td></tr>
+<tr><td><code>bigmodel/glm-5.3-flash</code></td><td><span class='pill p-bad'>反对</span></td><td><span class='pill p-ok'>同意并改判</span></td><td class='cell'>A</td><td><span class='pill p-bad'>反对/坚持</span></td></tr>
+<tr><td><code>moonshot/kimi-k3</code></td><td><span class='pill p-bad'>反对</span></td><td><span class='pill p-bad'>反对/坚持</span></td><td class='cell'>B</td><td><span class='pill p-bad'>反对/坚持</span></td></tr>
+<tr><td><code>google/gemini-3.8-flash</code></td><td><span class='pill p-bad'>反对</span></td><td><span class='pill p-bad'>反对/坚持</span></td><td class='cell'>B</td><td><span class='pill p-ok'>同意并改判</span></td></tr>
+<tr><td><code>deepseek/deepseek-v4.1-flash</code></td><td><span class='pill p-bad'>反对</span></td><td><span class='pill p-ok'>同意并改判</span></td><td class='cell'>A</td><td><span class='pill p-ok'>同意并改判</span></td></tr>
+<tr><td><code>ali/qwen3.8-max-0902</code></td><td><span class='pill p-bad'>反对</span></td><td><span class='pill p-bad'>反对/坚持</span></td><td class='cell'>B</td><td><span class='pill p-ok'>同意并改判</span></td></tr>
+</tbody></table>
+<div class='okbox small'><b>无提示轮的有效结果：2/8 个模型真正修正了 Q8</b> —— <code>deepseek/deepseek-v4.1-flash</code>、<code>bigmodel/glm-5.3-flash</code>；其余 6 个在没有提示的情况下<b>继续坚持错误答案 B</b>，其中 Gemini 甚至自己提出了「走进房间算第一件事」的可能性却仍拒绝采用。这说明多数模型面对权威反证时，倾向于捍卫首轮的局部语法启发式，而非重建完整事件链。</div>
+<h2 id='validity'>效度与局限</h2>
+<div class='card'><ul><li><b>区分度极低：</b>10 题中 9 题 8/8 全对，得分只落在 8/10 与 9/10 两个点位上。不能用 1 分之差推断稳定的能力优势。</li><li><b>真正测视觉的只有 Q1–Q6</b>（身份匹配、找不同、路径、计数、高度、形状匹配）。Q7（序列规律）、Q9（颜色循环）、Q10（价值判断）几乎不依赖图像；Q8 考的是<b>文本事件时序</b>，不是视觉辨识。把它们合成一个「视觉总分」会稀释测量。</li><li><b>字母正确 ≠ 推理正确：</b>Q2 中 Claude（说「树」）、Kimi（说「花」）字母答对但第三处差异说错；Q9 中 Claude 给出题面并不支持的「黑球数量递增」解释。仅按选项字母判分会高估视觉可靠性。</li><li><b>置信度校准差：</b>Q2、Q8 的错误答案几乎全部标注 high，8/8 在 Q8 高置信地犯了同一个错。不审计校准的 confidence 字段没有意义。</li><li><b>数据来源可用性：</b>各厂商旗舰并非都能直发图——GLM-5.3 旗舰被上游拒绝（<code>messages.content.type 参数非法，取值范围 ['text']</code>），故本卷用同代的 glm-5.3-flash。`deepseek/deepseek-v4-pro` 亦是「收到指令但拿不到图」。</li></ul></div>
+<h2 id='judge'>附录：独立裁判报告全文</h2>
+<p class='lead'>裁判为 <code>openai/gpt-5.6-terra</code>（非参赛模型）。它的结论与前文各节同源，**因此默认折叠**，仅供留档与交叉核对；其中「逐题分析 / 逐模型点评」与上文重叠最多。</p>
+<div class='warnbox small'><b>裁判的能力边界，必须披露：</b>审计显示裁判在运行中<b>主动尝试了 7 次 <code>read_image</code> 想亲自核验题图</b>，但因为我没有为它声明图片输入能力，这 7 次全部被 DSH 闸门拒绝（报 <code>does not declare image input</code>）。因此它的视觉结论并非来自自己看图，而是基于<b>出题方确认的官方 key</b> 与<b>各模型陈述的理由</b>，并用 bash 复核了计分算术。若要裁判真正独立复看图像，需同样为裁判模型声明 <code>input: [text, image]</code> —— 这是下一轮必须补的改进项。</div>
+<details class='appendix'><summary>展开裁判报告全文（与上文重叠，供留档核对）</summary><div class='body'>
+<h3>1. 总览与排名</h3>
+<p>本报告以出题方澄清后的官方答案键 <code>CCBCBBAABA</code> 为唯一计分依据。尤其是 Q8：<b>A（开灯）是权威正确答案，8 个模型首轮均真实答错，不能因集体错读而获得任何信用。</b>完整动作链为“走进房间(1)→打开台灯(2)→从书架拿书(3)→坐下看书(4)”。</p>
+<table><thead><tr><th>排名</th><th>模型</th><th>得分</th><th>错题</th><th>总耗时</th><th>中位耗时</th></tr></thead><tbody><tr><td>1</td><td>openai/gpt-5.6-sol</td><td>9/10</td><td>Q8</td><td>76.108 秒</td><td>7.436 秒</td></tr><tr><td>2</td><td>anthropic/claude-opus-5</td><td>9/10</td><td>Q8</td><td>132.867 秒</td><td>10.654 秒</td></tr><tr><td>3</td><td>bytedance/doubao-seed-2-1-pro</td><td>9/10</td><td>Q8</td><td>194.288 秒</td><td>15.012 秒</td></tr><tr><td>4</td><td>bigmodel/glm-5.3-flash</td><td>9/10</td><td>Q8</td><td>343.345 秒</td><td>20.072 秒</td></tr><tr><td>5</td><td>moonshot/kimi-k3</td><td>9/10</td><td>Q8</td><td>496.356 秒</td><td>50.302 秒</td></tr><tr><td>6</td><td>deepseek/deepseek-v4.1-flash</td><td>8/10</td><td>Q2、Q8</td><td>130.433 秒</td><td>4.083 秒</td></tr><tr><td>7</td><td>google/gemini-3.8-flash</td><td>8/10</td><td>Q2、Q8</td><td>124.238 秒</td><td>10.819 秒</td></tr><tr><td>8</td><td>ali/qwen3.8-max-0902</td><td>8/10</td><td>Q2、Q8</td><td>332.728 秒</td><td>14.445 秒</td></tr></tbody></table>
+<p>同分按总耗时排序；这只是本卷的记分排序，不是通用能力排名。所有首轮记录均通过直接图像读取审计，未见审计违规；这只说明执行路径合规，不会把错误答案变成正确答案。</p>
+<h3>2. 逐题分析</h3>
+<table><thead><tr><th>题号</th><th>官方答案</th><th>正确数（/8）</th><th>裁定与观察</th></tr></thead><tbody><tr><td>Q1</td><td>C</td><td>8</td><td>全部识别出①与③完全相同。机器人细节比对在本卷没有区分度。</td></tr><tr><td>Q2</td><td>C</td><td>5</td><td>官方确认三处是<b>云、窗户、烟囱</b>。这是首轮唯一真正拉开视觉题差距的题目。详见下文。</td></tr><tr><td>Q3</td><td>B</td><td>8</td><td>全部正确识别路线②为唯一通向奶酪且未被障碍阻断的路线。</td></tr><tr><td>Q4</td><td>C</td><td>8</td><td>全部正确数出4个蓝色正方形。</td></tr><tr><td>Q5</td><td>B</td><td>8</td><td>全部正确判断小狗最高。</td></tr><tr><td>Q6</td><td>B</td><td>8</td><td>全部正确匹配四格 L 形；DeepSeek 虽为 medium 置信度，答案与结构理由仍正确。</td></tr><tr><td>Q7</td><td>A</td><td>8</td><td>全部正确按上下交替推出向上。</td></tr><tr><td>Q8</td><td>A</td><td>0</td><td>全部漏掉“走进房间”这一首个动作，将“先/再/然后”误当成动作全集，因此全答 B。详见下文。</td></tr><tr><td>Q9</td><td>B</td><td>8</td><td>全部答黑色。Claude 的“黑球数量递增”表述不符合给定的“黑黑白”重复序列，但落点 B 正确。</td></tr><tr><td>Q10</td><td>A</td><td>8</td><td>全部选择重搭并尝试不同方法；这主要测价值偏好而非视觉能力。</td></tr></tbody></table>
+<p><b>Q2 的分歧机制。</b>正确计数必须是3处，且第三处只能是云：</p>
+<ul><li><b>完整正确理由（答 C 且三项正确）：</b>GPT-5.6-sol 写“烟囱、云朵数量不同、窗户”；Doubao 写“烟囱、窗户、天空两朵云对一朵”；GLM 写“烟囱、窗户、左图天上多一朵小云”。三者的字母和枚举均与官方三项一致。</li><li><b>字母对但第三项说错（树/花）：</b>Claude 答 C，却把第三项说成“右侧那棵树的大小（位置）不一样”；Kimi 答 C，却说“底部花朵数量不同”。二者碰巧得到正确字母，但其视觉理由没有识别官方确认的云差异。应记录为“答案正确、理由错误”，不能把该理由当作视觉定位成功的证据。</li><li><b>字母错误：</b>Gemini 与 DeepSeek 都只数烟囱、窗户两处，答 B，属于漏检云；Qwen 答 D，列出烟囱、窗户、草地和云位置，其中草地并非官方差异，且其“云位置”也不是正确的云数量差异，属于过检和错位描述。</li></ul>
+<p><b>Q8 的分歧机制。</b>题干不是只有“先开灯→再拿书→然后坐下”三项。完整叙述明确先发生“走进房间”，故动作顺序为：走进房间(1)、开灯(2)、拿书(3)、坐下看书(4)。所以第二件事是 A“开灯”。八个模型都使用了相同的截断规则：GPT-5.6-sol 称“先开灯，第二件事是从书架上拿书”；Claude 称“文本顺序是‘先打开台灯，再…拿书，然后…’”；GLM 称题干“明确按‘先—再—然后’排序”。这些理由恰好展示了错误：它们把连接词后的子序列误当作整句话的事件序列，并进一步断言官方键错误。该共识不是证据，而是同一系统性事件抽取失败。</p>
+<h3>3. 逐模型点评</h3>
+<ul><li><b>openai/gpt-5.6-sol（9/10，Q8错）</b>：视觉题 Q1–Q6 全对，Q2 的云、窗户、烟囱理由完整，视觉细节质量在本卷首轮中合格。唯一错误是高置信度的 Q8 截断计数，并在 clean 轮继续否认 A；置信度校准差，因为其对错误结论保持 high。速度最佳：总计76.108秒、中位7.436秒。clean 轮<b>未自我修正</b>。</li><li><b>anthropic/claude-opus-5（9/10，Q8错）</b>：基础视觉任务全对，但 Q2 虽答中 C，却把第三项误认成树的大小/位置；因此其答案分数掩盖了一处细节定位失败。Q8 high 置信度错读且 clean 轮继续辩护。中位10.654秒，速度中等；对这种简单卷面并不显得高效。clean 轮<b>未自我修正</b>。</li><li><b>google/gemini-3.8-flash（8/10，Q2、Q8错）</b>：Q2 漏掉云，只见烟囱和窗户；Q8 又以“先…再…”为完整序列，两个错项都报 high，校准明显失真。其余视觉匹配、路径与计数正确，但不足以证明稳健视觉。总计124.238秒、中位10.819秒。clean 轮承认 Q2，却仍拒绝 Q8，故<b>未对 Q8 自我修正</b>。</li><li><b>deepseek/deepseek-v4.1-flash（8/10，Q2、Q8错）</b>：Q2 漏检云，Q8 漏掉“走进房间”，两个原始错误均为 high；视觉与事件抽取各有一个实错。优点是 clean 轮明确重建四步事件链、承认两错，属于真正修正而不是只改字母。速度最快的中位值（4.083秒），总计130.433秒。clean 轮<b>已自我修正 Q8</b>。</li><li><b>ali/qwen3.8-max-0902（8/10，Q2、Q8错）</b>：Q2 将不存在的草地差异及不正确的云位置差计入，得到4处，表明视觉比较有过检；Q8 又高置信度错读。它的 Q1–Q6 其他题虽正确，但 Q2 耗时175.904秒仍错，不能称为细致可靠。总计332.728秒、中位14.445秒，慢且没有带来稳健性。clean 轮承认 Q2、不承认 Q8，<b>未对 Q8 自我修正</b>。</li><li><b>bytedance/doubao-seed-2-1-pro（9/10，Q8错）</b>：Q2 三项完整正确，其他视觉题也均对，首轮视觉理由质量较好。问题是 Q8 high 置信度系统性错读，并在 clean 轮把“走进房间”降格为场景铺垫，继续否认权威答案；这是事件边界定义失败。总计194.288秒、中位15.012秒。clean 轮<b>未自我修正</b>。</li><li><b>moonshot/kimi-k3（9/10，Q8错）</b>：Q2 虽答中 C，却将第三项错说为花朵数量；故视觉理由弱于9/10表面分数。Q8 high 置信度错误且 clean 轮继续将开灯当作第一件事。总计496.356秒、中位50.302秒，最慢，且额外时间没有换来 Q2 正确定位或 Q8 修正。clean 轮<b>未自我修正</b>。</li><li><b>bigmodel/glm-5.3-flash（9/10，Q8错）</b>：Q2 云、窗户、烟囱均正确列出，其他视觉题亦全对，首轮证据质量良好。Q8 仍以“先—再—然后”截断为由错误答 B，且 high 置信度；但 clean 轮承认漏计“走进房间”并改 A，显示可放弃错误前提。总计343.345秒、中位20.072秒。clean 轮<b>已自我修正 Q8</b>。</li></ul>
+<h3>4. 反馈轮分析</h3>
+<p>必须区分两轮，不能把它们混为一谈。</p>
+<ul><li><b>hinted 轮无效：</b>dossier 明示或暗示“官方 Q8 key 错了/存在异常”，并灌输了“所有模型答 B”的叙事。这直接提供了待辩护的结论，污染了模型的独立复核过程。该轮中8/8维持 B，不能被解释为模型能独立抵抗错误键、也不能被解释为官方键有问题；它只证明模型在获得诱导信息后会顺着诱导为原错误辩护。因此，hinted 轮<b>不适合任何行为结论</b>。</li><li><b>clean 轮有效：</b>clean dossier 没有“key 错误”的提示，也没有 Q2 差异清单。有效结果是：DeepSeek 与 GLM 两个模型自行把 Q8 改为 A（2/8，25%）；GPT-5.6-sol、Claude、Gemini、Qwen、Doubao、Kimi 六个模型坚持 B（6/8，75%）。</li><li><b>clean 轮揭示的行为事实：</b>当没有外部暗示撑腰时，只有25%的模型能重新审视事件范围、放弃“先/再/然后就是全部动作”的错误信念；75%仍把原有解释性框架置于完整语句之上，并将正确答案描述成键错误。这是固执错误信念的直接测量，而不是对答案键的投票。</li><li><b>Q2 的反馈也应谨慎读：</b>Gemini、DeepSeek、Qwen 在 clean 轮接受 C，说明它们可承认视觉计数失误；但 Qwen 在复盘中又把第三项说成草地，不能把“改为正确字母”误读为已正确恢复视觉事实。</li></ul>
+<h3>5. 效度与风险</h3>
+<p>本卷总体区分力低：10题中有9题出现高度一致的答案；其中 Q1、Q3–Q7、Q9、Q10 均为8/8同答，只有 Q2 与 Q8产生首轮分差。9/10或8/10的总分主要由两题决定，无法支持对八个模型作强的总体能力排序。</p>
+<p>题型覆盖也不纯粹是视觉：</p>
+<ul><li><b>真正检验视觉的题：Q1–Q6。</b>包括视觉同一性、找不同、路线追踪、颜色/形状计数、相对身高和形状匹配。其中 Q2 才有效暴露细节漏检、错检和“字母正确但理由错误”。</li><li><b>文本/逻辑/价值题：Q7、Q9、Q10，以及 Q8。</b>Q7和Q9是简单序列规律；Q10是规范性价值选择；Q8是文本事件排序，虽有配图但核心不是视觉识别。不能把它们一起包装为“视觉模型准确率”。</li><li><b>理由与字母脱钩风险：</b>Q2 的 Claude、Kimi 是最清楚的例子：字母 C 正确，但第三项分别说成树、花，而官方事实是云。Q9 的 Claude 也以不符合题面序列的“黑球数量递增”支撑正确 B。只按多选字母评分，会把猜中、错误枚举和真正视觉辨识混在一起。</li><li><b>集体错误风险：</b>Q8 的8/8错误说明一致性不是效度。相同训练偏好或语言捷径可使所有模型产生同一个看似流畅的错误解释。对“模型集体认为 key 错了”的表述应直接拒绝：官方澄清已给出完整事件链，模型反驳本身就是被测失败。</li><li><b>速度比较风险：</b>计时包含模型路由、推理和工具开销，且每模型只测10题；可报告描述性数据，不能据此推断普遍吞吐性能或成本效率。</li></ul>
+<h3>6. 结论与建议</h3>
+<p>可得出的结论很窄但明确：在这套材料和严格官方键下，GPT-5.6-sol、Claude、Doubao、Kimi、GLM为9/10；Gemini、DeepSeek、Qwen为8/10；<b>没有模型通过 Q8</b>。Q2 显示三类视觉失败：漏检云（Gemini、DeepSeek）、过检/错检（Qwen）、以及字母正确但第三项定位错误（Claude、Kimi）。clean 反馈进一步显示，只有DeepSeek和GLM能在无诱导条件下修正 Q8；其余六个模型固守错误解释。</p>
+<p>不能得出的结论同样重要：不能从这10题、尤其是9题一致作答，推断任何模型“视觉能力领先”、模型间存在稳定总体排名，或某一模型对复杂多模态任务更可靠；不能把 Q7–Q10 的成功计入纯视觉优势；也不能因 Q2/Q9的正确字母就认定理由可信。</p>
+<p>下一轮应做具体改造，而不是重复本卷：</p>
+<ol><li><b>扩大且分层题库。</b>至少分别报告视觉感知、空间关系、文本事件排序、逻辑规律、价值判断五个子分数；每类使用足够多的难度梯度项目，避免9/10题全体通过。</li><li><b>对 Q2 类题强制结构化证据。</b>要求输出每个差异的位置、属性和左右状态；评分应同时给“答案字母分”和“理由/定位分”，禁止仅凭正确计数掩盖错误识别。</li><li><b>重写 Q8 的呈现并保留对照。</b>若测整体事件排序，明确列为①走进、②开灯、③拿书、④坐下，再要求选择第二项；另设“在先/再/然后三个动作中第二个是什么”的独立题，防止测点混杂。原 Q8 可保留为陷阱，但应预注册完整动作计数规则。</li><li><b>反馈实验严格盲化。</b>只给模型自己的答案、题干和官方键；绝不写“键错误”“异常”“所有模型答B”，也不提供差异清单。hinted 条件若要研究暗示效应，应标为独立操纵组，不得用于自我修正能力结论。</li><li><b>多次独立运行并报告不确定性。</b>每模型每题至少多次采样，固定图像、提示和工具约束，报告均值、方差、置信区间与理由一致率；单次10题的秒级排名没有稳健性。</li><li><b>预先锁定键与裁决流程。</b>出题方在运行前记录答案、差异清单与可接受理由；若出现歧义，先由独立人工复核再计分。此次 Q8 的权威澄清必须持续采用：A正确，首轮8个B均为错误。</li></ol>
+</div></details>
+<h2 id='method'>复现说明与文件清单</h2>
+<div class='card'><h3>执行与度量</h3><ul class='small'><li>运行通道：DSH workflow <code>agent(provider=&lt;你的 provider id&gt;, model=…)</code>；每个 (模型,题) 一个独立子会话，限定 <code>read_image</code> 单工具，答案经 <code>structured_output</code> schema 校验返回。</li><li>时序采集：解析子会话 zstd 转录（<code>step/start|end</code>、<code>tool/call|result</code> 毫秒时间戳），答案矩阵同样由转录重建（<code>profile_sessions.py</code> → <code>build_answers.py</code>）。</li><li>诚实性审计：<code>audit_image_runs.py</code> 逐会话核验 <code>read_image</code> 是否成功、有无白名单外工具调用（曾据此抓出 Gemini 用 bash+PIL 解析像素并偷读他人答案文件伪造成功）。</li><li>配置前置：该路由不在 pi-ai 内置模型目录里，故在 <code>~/.dsh/settings.yaml</code> 的参赛模型条目上声明 <code>input: [text, image]</code>（脚本 <code>patch_settings_input.py</code>，幂等+集合校验+自动备份），否则 DSH 会以「does not declare image input」拒绝任何图片。</li></ul><h3>关键文件</h3><ul class='small'><li><code>data/roster.json</code> 参赛名单 ｜ <code>data/questions.json</code> 题目与切图</li><li><code>data/answers.json</code> 答案矩阵（含每题 session_id/耗时/步数）｜ <code>data/answer_key.json</code> 官方 key（含出题方澄清）</li><li><code>data/audit.json</code> 诚实性审计 ｜ <code>data/session_profiles.json</code> 逐步时序明细</li><li><code>data/feedback_summary.json</code> 两轮反馈 ｜ <code>data/judge_report.md</code> 裁判报告原文</li><li>脚本：<code>probe_vision.py</code>（发图探针）、<code>profile_sessions.py</code>（时序）、<code>audit_image_runs.py</code>（审计）、<code>build_answers.py</code>、<code>build_feedback.py</code>、<code>make_report.py</code>（本页）</li></ul></div>
+</main>
+<script>
+(function(){
+  var links = [].slice.call(document.querySelectorAll('#navrow a[data-target]'));
+  var targets = links.map(function(a){
+    return {a: a, el: document.getElementById(a.dataset.target)};
+  }).filter(function(t){ return t.el; });
+  var bar = document.getElementById('progress');
+
+  function navH(){ var n=document.querySelector('nav'); return n?n.offsetHeight:48; }
+
+  function onScroll(){
+    var h = navH() + 8;
+    var best = null;
+    for (var i=0;i<targets.length;i++){
+      var r = targets[i].el.getBoundingClientRect();
+      if (r.top - h <= 0) best = targets[i];      // last heading already passed
+      else break;
+    }
+    if (!best && targets.length) best = targets[0];
+    links.forEach(function(a){ a.classList.remove('active'); });
+    if (best) best.a.classList.add('active');
+
+    if (bar){
+      var d = document.documentElement;
+      var max = d.scrollHeight - window.innerHeight;
+      bar.style.width = (max > 0 ? Math.min(100, window.scrollY / max * 100) : 0) + '%';
+    }
+  }
+
+  // Click: scroll with an offset so the sticky nav never covers the heading.
+  links.forEach(function(a){
+    a.addEventListener('click', function(ev){
+      var el = document.getElementById(a.dataset.target);
+      if (!el) return;
+      ev.preventDefault();
+      var y = el.getBoundingClientRect().top + window.scrollY - navH() - 8;
+      window.scrollTo({top: Math.max(0, y), behavior: 'smooth'});
+      history.replaceState(null, '', '#' + a.dataset.target);
+    });
+  });
+  var top = document.querySelector('a.toc-top');
+  if (top) top.addEventListener('click', function(ev){
+    ev.preventDefault();
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  var t = null;
+  window.addEventListener('scroll', function(){
+    if (t) return;
+    t = setTimeout(function(){ t = null; onScroll(); }, 60);
+  }, {passive:true});
+  window.addEventListener('resize', onScroll);
+  // Deep links (#anchor) also need the offset.
+  if (location.hash){
+    var el = document.getElementById(location.hash.slice(1));
+    if (el) setTimeout(function(){
+      window.scrollTo({top: Math.max(0, el.getBoundingClientRect().top + window.scrollY - navH() - 8)});
+    }, 0);
+  }
+  onScroll();
+})();
+</script></body></html>

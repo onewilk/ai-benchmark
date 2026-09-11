@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 本地/临时产物
+*.log
+*.tmp
+.DS_Store
+
+# 凭证：绝不入库
+.credentials.yaml
+*.credentials*
+.env
+*.key
+*.pem
+
+# 报告的可选单文件版本（体积大，按需自己生成）
+report-embedded.html
+
+# 反馈轮的中间 dossier（可由 answers.json + answer_key.json 重新生成）
+data/feedback/
+data/feedback_clean/

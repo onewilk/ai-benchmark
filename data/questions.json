@@ -1,0 +1,137 @@
+{
+  "paper": {
+    "crops": "data/paper/questions/Q01..Q10.png",
+    "note": "Q8 题干在原图中即重复出现两次（原题瑕疵，转录忠实保留）",
+    "source_scan": {
+      "sha256": "68314100cb67827d126280363487a1566c722087bb9a64ecbfc52585c5350d70",
+      "size_px": [
+        614,
+        6822
+      ],
+      "included": false,
+      "note": "原卷截图未随仓库分发；本目录仅保留按行空白切分出的 10 张题图（questions/Q01–Q10.png），它们即为发送给模型的素材。sha256 用于溯源校对。"
+    }
+  },
+  "questions": [
+    {
+      "q": 1,
+      "text": "下面4个机器人中，哪两个长得完全一样？",
+      "options": {
+        "A": "①和②",
+        "B": "②和③",
+        "C": "①和③",
+        "D": "②和④"
+      },
+      "has_figure": true,
+      "image": "data/paper/questions/Q01.png"
+    },
+    {
+      "q": 2,
+      "text": "下面两幅图有几处不一样的地方？",
+      "options": {
+        "A": "1处",
+        "B": "2处",
+        "C": "3处",
+        "D": "4处"
+      },
+      "has_figure": true,
+      "image": "data/paper/questions/Q02.png"
+    },
+    {
+      "q": 3,
+      "text": "小老鼠要走到终点吃到奶酪，它应该走哪条路？",
+      "options": {
+        "A": "路线①",
+        "B": "路线②",
+        "C": "路线③",
+        "D": "路线④"
+      },
+      "has_figure": true,
+      "image": "data/paper/questions/Q03.png"
+    },
+    {
+      "q": 4,
+      "text": "图中有几个蓝色的正方形？",
+      "options": {
+        "A": "2个",
+        "B": "3个",
+        "C": "4个",
+        "D": "5个"
+      },
+      "has_figure": true,
+      "image": "data/paper/questions/Q04.png"
+    },
+    {
+      "q": 5,
+      "text": "三只小动物排队：小兔在最前面，小狗在中间，小猫在最后面。谁最高？",
+      "options": {
+        "A": "小兔",
+        "B": "小狗",
+        "C": "小猫",
+        "D": "一样高"
+      },
+      "has_figure": true,
+      "image": "data/paper/questions/Q05.png"
+    },
+    {
+      "q": 6,
+      "text": "右边哪一个造型和左边的图案一致？",
+      "options": {
+        "A": "图①",
+        "B": "图②",
+        "C": "图③",
+        "D": "图④"
+      },
+      "has_figure": true,
+      "image": "data/paper/questions/Q06.png"
+    },
+    {
+      "q": 7,
+      "text": "箭头的变化规律是：↑、↓、↑、↓，接下来应该是什么方向？",
+      "options": {
+        "A": "↑",
+        "B": "↓",
+        "C": "←",
+        "D": "→"
+      },
+      "has_figure": false,
+      "image": "data/paper/questions/Q07.png"
+    },
+    {
+      "q": 8,
+      "text": "听老师说一句话，选出对应的图片。读题文本：“小明走进房间，先打开台灯，再从书架上拿了一本书，然后坐下来开始看。”请问：小明做的第二件事情是什么？",
+      "options": {
+        "A": "开灯",
+        "B": "拿书",
+        "C": "坐下",
+        "D": "喝水"
+      },
+      "has_figure": true,
+      "image": "data/paper/questions/Q08.png"
+    },
+    {
+      "q": 9,
+      "text": "图形的规律是：●、●、○、●、●、○，接下来应该是什么颜色？",
+      "options": {
+        "A": "○ (白色)",
+        "B": "● (黑色)",
+        "C": "黑色和白色都可以",
+        "D": "不知道"
+      },
+      "has_figure": false,
+      "image": "data/paper/questions/Q09.png"
+    },
+    {
+      "q": 10,
+      "text": "如果搭积木的时候积木倒了，你会怎么做？",
+      "options": {
+        "A": "重新搭，试试不同的搭法",
+        "B": "有点不开心，不想搭了",
+        "C": "叫爸爸妈妈帮忙",
+        "D": "换一个玩具玩"
+      },
+      "has_figure": false,
+      "image": "data/paper/questions/Q10.png"
+    }
+  ]
+}
